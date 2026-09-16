@@ -200,7 +200,7 @@ partial class Form1
         this.MinimumSize = new System.Drawing.Size(860, 480);
         this.Name = "Form1";
         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-        this.Text = "ETS2 / ATS All-in-One Mod Tool";
+        this.Text = "ETS2 Economy Equalizer";
         this.bottomPanel.ResumeLayout(false);
         this.bottomPanel.PerformLayout();
         this.buttonTableLayout.ResumeLayout(false);

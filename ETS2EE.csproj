@@ -8,6 +8,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
 
+    <!-- Ausgabename der EXE-Datei -->
+    <AssemblyName>ETS2EE</AssemblyName>
+
     <!-- Single-File & Standalone Konfiguration -->
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>

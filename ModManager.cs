@@ -98,7 +98,7 @@ namespace ETS2_ModTool
 
         private void CreateManifest(string rootDir, ModMetadata meta)
         {
-            // --- Universell lesbare Beschreibung mit refskegg-Credits ---
+            // --- Universell lesbare Beschreibung ---
             string formattedDescription =
         $@"=========================================
         {meta.PackageName}
