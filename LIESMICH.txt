@@ -1,0 +1,50 @@
+============================================================
+  ETS2 Economy Equalizer - Öffentliche Beta
+  Developed by refskegg
+============================================================
+
+WICHTIGER HINWEIS ZUR BETA-PHASE:
+Dies ist eine frühe Testversion (Beta). Die Software wurde 
+sorgfältig anhand der ETS2 Version 1.60 getestet, dennoch 
+können unerwartete Wechselwirkungen mit anderen Mods oder 
+ETS2-Updates auftreten.
+
+1. PROFIL-BACKUP ERSTELLEN (DRINGEND EMPFOHLEN):
+Erstelle vor dem Aktivieren deiner generierten Mod unbedingt ein 
+manuelles Backup deines Spielstands:
+Pfad: Dokumente\Euro Truck Simulator 2\profiles\
+Kopiere deinen Profil-Ordner einfach an einen sicheren Ort. 
+Nutzung auf eigene Gefahr – keine Haftung für beschädigte oder 
+unbrauchbare Savegames!
+
+2. EMPFOHLENE TESTMETHODE:
+Am sichersten testet es sich mit einem neuen, separaten Profil. 
+So kannst du Werte von Grund auf prüfen, ohne deinen Haupt-Spielstand 
+zu gefährden.
+
+3. FEEDBACK & FEHLERMELDUNGEN:
+Sollte das Spiel beim Laden unerwartet abstürzen (CTD), 
+eingestellte Werte nicht korrekt übernommen worden sein, gerne Feedback
+und Erfahrungen teilen. 
+============================================================
+
+============================================================
+  AUSBLICK & GEPLANTE FEATURES (ROADMAP)
+============================================================
+Der aktuelle Stand konzentriert sich auf die stabile Kernfunktion. 
+Für kommende Versionen sind unter anderem folgende Erweiterungen geplant:
+
+• Komfort & Bedienung:
+  - Überarbeitung der Benutzeroberfläche (moderneres Design, Dark Mode)
+  - Tooltips mit Erklärungen zu jedem einzelnen SCS-Parameter
+  - Direkter Export in den Mod-Ordner von ETS2 ohne manuelles Verschieben
+
+• Vorkonfigurierte Presets:
+  - "Hardcore Economy" (sehr harte Kredite, realistische Margen)
+  - "Arcade / Casual" (schneller Spielfortschritt, geringe Strafen)
+  - Einfaches Teilen und Importieren eigener Presets über das Tool
+
+• ATS-Unterstützung:
+  - Portierung bzw. Dual-Modus für den American Truck Simulator (ATS)
+  - Anpassung der Währungs- und Meilen-/Entfernungsberechnungen
+============================================================

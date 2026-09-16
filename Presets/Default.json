@@ -1,0 +1,430 @@
+﻿{
+  "Bank": {
+    "General": {
+      "MinAfterLoanRepay": "0",
+      "OverdraftDuration": "5",
+      "OverdraftWarnDay": "2"
+    },
+    "Loan1": {
+      "Amount": "10000",
+      "InterestRate": 23,
+      "Duration": "5"
+    },
+    "Loan2": {
+      "Amount": "50000",
+      "InterestRate": 20,
+      "Duration": "5"
+    },
+    "Loan3": {
+      "Amount": "100000",
+      "InterestRate": 18,
+      "Duration": "5"
+    },
+    "Loan4": {
+      "Amount": "400000",
+      "InterestRate": 12,
+      "Duration": "10"
+    }
+  },
+  "Damage": {
+    "Collision": {
+      "TruckDamageCoef": "0.0007",
+      "TrailerDamageCoef": "0.0007",
+      "DraggedTrailerDamageCoef": "0.00002",
+      "TruckToTrailerDmg": "0.2",
+      "SideDamageFactor": "6.0",
+      "RoofDamageFactor": "11.0"
+    },
+    "TruckDist": {
+      "CabinDamageRatio": "0.8",
+      "ChassisDamageRatio": "1.0",
+      "EngineDamageRatio": "0.5",
+      "TransmissionDamageRatio": "0.3",
+      "WheelDamageRatio": "0.15",
+      "CabinUnfixable": "0.04",
+      "ChassisUnfixable": "0.05",
+      "EngineUnfixable": "0.02",
+      "TransmissionUnfixable": "0.01",
+      "WheelUnfixable": "0.01"
+    },
+    "TrailerDist": {
+      "TrailerBodyDamageRatio": "0.8",
+      "TrailerChassisDamageRatio": "1.0",
+      "TrailerWheelDamageRatio": "0.15",
+      "CargoDamageRatio": "1.0",
+      "TrailerBodyUnfixable": "0.04",
+      "TrailerChassisUnfixable": "0.05",
+      "TrailerWheelUnfixable": "0.01"
+    },
+    "TruckWear": {
+      "CabinWear": "0.0",
+      "ChassisWear": "0.0",
+      "EngineWear": "2e-6",
+      "TransmissionWear": "2e-6",
+      "WheelWear": "2e-6",
+      "CabinWearUnfixable": "0.0",
+      "ChassisWearUnfixable": "0.0",
+      "EngineWearUnfixable": "2e-7",
+      "TransmissionWearUnfixable": "2e-7",
+      "WheelWearUnfixable": "2e-5"
+    },
+    "TrailerWear": {
+      "TrailerBodyWear": "0.0",
+      "TrailerChassisWear": "0.0",
+      "TrailerWheelWear": "2e-6",
+      "TrailerBodyWearUnfixable": "0.0",
+      "TrailerChassisWearUnfixable": "0.0",
+      "TrailerWheelWearUnfixable": "2e-5"
+    }
+  },
+  "Economy": {
+    "Garage": {
+      "TruckRefund": "0.6",
+      "PriceSmallGarage": "180000",
+      "PriceGarageUpgrade": "100000",
+      "GarageProdPlanTiny": "20000",
+      "GarageProdPlanSmall": "150000",
+      "GarageProdPlanLarge": "300000",
+      "FuelDiscountInGarage": "0.15",
+      "TruckCountForOnline": "5"
+    },
+    "Revenue": {
+      "RevenuePerKmBase": "15",
+      "FixedRevenue": "600",
+      "RevenueCoefPerKm": "0.9",
+      "CargoMarketRevenueCoefPerKm": "1.0",
+      "RewardBonusLevel": "0.015",
+      "AbandonedJobFine": "12000",
+      "CargoDamageCost": "5.0",
+      "CargoDamageCostFactor": "0.04"
+    },
+    "DeliveryWindows": {
+      "LateDeliveryMaxOvertime0": "2880",
+      "LateDeliveryMaxOvertime1": "720",
+      "LateDeliveryMaxOvertime2": "240",
+      "DeliveryWindow0": "400",
+      "DeliveryWindow1": "250",
+      "DeliveryWindow2": "90",
+      "DeliveryWindowCoef0": "1.0",
+      "DeliveryWindowCoef1": "1.15",
+      "DeliveryWindowCoef2": "1.4"
+    },
+    "Simulation": {
+      "SimulationAvgSpeed": "62.0",
+      "MaximumDrivingTime": "660",
+      "SleepingTime": "540",
+      "HurryUpTimer": "114",
+      "NoCargoProb": "0.1",
+      "CargoValidityMin": "180",
+      "CargoValidityMax": "1800"
+    },
+    "Service": {
+      "TowPriceBase": "150",
+      "TowPriceFactor": "0.4",
+      "TowTimeBase": "1800",
+      "TowTimeFactor": "3",
+      "TowFuelRatio": "0.0",
+      "RefuelFuel": "50",
+      "RefuelPriceBase": "150",
+      "RefuelPriceFactor": "3",
+      "RefuelTimeBase": "1800",
+      "RechargeEnergy": "100",
+      "RechargePriceBase": "150",
+      "RechargePrice": "2",
+      "RechargeTimeBase": "7200"
+    },
+    "Driver": {
+      "MinimalDriverSalary": "350",
+      "DriverRevenueCoefPerKm": "0.67",
+      "DriverCargoMarketRevenueCoefPerKm": "0.70",
+      "DriverHireCost": "1500",
+      "DriverMaxCargoDamage": "6.0",
+      "FreeDriverLevelCap": "30",
+      "DriverOfferScrapProb": "0.5",
+      "DriverQuitwarnTime": "3",
+      "DriverQuitTime": "5",
+      "DriverNoReturnJobProb": "0.1",
+      "DriverSkilledJobProb": "0.8"
+    },
+    "XP": {
+      "FreeRoamReportLimit": "100",
+      "ExpCargoDelivery": "1.0",
+      "ExpFreeRoam": "0.5",
+      "ExpRoadDiscovery": "0.8",
+      "ExpParkBonus": "15",
+      "ExpParkBonusMedium": "40",
+      "ExpParkBonusHard": "90",
+      "ExpParkDoubleBonus": "20",
+      "ExpParkDoubleBonusMedium": "60",
+      "ExpParkDoubleBonusHard": "170",
+      "ExpParkLoadBonus": "15",
+      "ExpDamagedCargo": "5",
+      "ExpDamagedCargoFactor": "0.04"
+    }
+  },
+  "Police": {
+    "General": {
+      "FineFactorBase": "0.2",
+      "FineFactorStep": "0.08",
+      "FineFactorLimit": "1.0",
+      "FineAmountRounding": "20",
+      "FineOverspeedStep": "2.777778",
+      "FineOverspeedStepMultiplier": "1.877",
+      "FineOverspeedMultiplierLimit": "12.5",
+      "TimerDecreaseRate": "120",
+      "PoliceNearbyFineRate": "2",
+      "PoliceNearbyOffenceTimer": "15.0"
+    },
+    "FineAmounts": {
+      "CarCrash": "400",
+      "AvoidSleeping": "500",
+      "WrongWay": "100",
+      "SpeedingCamera": "200",
+      "NoLightsNight": "150",
+      "RedLights": "350",
+      "Speeding": "200",
+      "AvoidWeighing": "700",
+      "IllegalTrailer": "1500",
+      "AvoidInspection": "900",
+      "IllegalBorderCrossing": "2000",
+      "HardShoulderViolation": "150",
+      "DamagedVehicleUsage": "500",
+      "IllegalTrailerWeightStation": "1500"
+    },
+    "CheckDelays": {
+      "CarCrash": "0",
+      "AvoidSleeping": "60",
+      "WrongWay": "15",
+      "SpeedingCamera": "0",
+      "NoLightsNight": "70",
+      "RedLights": "0",
+      "Speeding": "60",
+      "AvoidWeighing": "0",
+      "IllegalTrailer": "600"
+    },
+    "PoliceCheckDelays": {
+      "CarCrash": "0",
+      "AvoidSleeping": "30",
+      "WrongWay": "5",
+      "SpeedingCamera": "0",
+      "NoLightsNight": "7",
+      "RedLights": "0",
+      "Speeding": "3",
+      "AvoidWeighing": "0",
+      "IllegalTrailer": "300"
+    },
+    "Probabilities": {
+      "CarCrash": "0.7",
+      "AvoidSleeping": "0.3",
+      "WrongWay": "0.6",
+      "SpeedingCamera": "1.0",
+      "NoLightsNight": "0.3",
+      "RedLights": "0.7",
+      "Speeding": "0.0",
+      "AvoidWeighing": "1.0",
+      "IllegalTrailer": "0.0",
+      "AvoidInspection": "1.0",
+      "IllegalBorderCrossing": "1.0",
+      "HardShoulderViolation": "1.0",
+      "DamagedVehicleUsage": "1.0",
+      "IllegalTrailerWeightStation": "1.0"
+    },
+    "PoliceProbabilities": {
+      "CarCrash": "1.0",
+      "AvoidSleeping": "0.3",
+      "WrongWay": "0.7",
+      "SpeedingCamera": "1.0",
+      "NoLightsNight": "0.8",
+      "RedLights": "1.0",
+      "Speeding": "0.9",
+      "AvoidWeighing": "1.0",
+      "IllegalTrailer": "0.3",
+      "AvoidInspection": "1.0",
+      "IllegalBorderCrossing": "1.0",
+      "HardShoulderViolation": "1.0",
+      "DamagedVehicleUsage": "1.0",
+      "IllegalTrailerWeightStation": "1.0"
+    }
+  },
+  "Service": {
+    "Truck": {
+      "RestoreFixedPrice": "0",
+      "RestoreAccessoryFixedPrice": "1000",
+      "RestoreAccessoryPriceCoef": "1.1"
+    },
+    "Trailer": {
+      "RestoreFixedPrice": "0",
+      "RestoreAccessoryFixedPrice": "1000",
+      "RestoreAccessoryPriceCoef": "1.1"
+    }
+  },
+  "Skills": {
+    "LongDistance": {
+      "Xp": {
+        "Rank1": "0.25",
+        "Rank2": "0.25",
+        "Rank3": "0.25",
+        "Rank4": "0.25",
+        "Rank5": "0.25",
+        "Rank6": "0.25"
+      },
+      "Revenue": {
+        "Rank1": "0.05",
+        "Rank2": "0.10",
+        "Rank3": "0.15",
+        "Rank4": "0.20",
+        "Rank5": "0.25",
+        "Rank6": "0.30"
+      },
+      "Distances": {
+        "Rank1": "400.0",
+        "Rank2": "650.0",
+        "Rank3": "1000.0",
+        "Rank4": "1600.0",
+        "Rank5": "2500.0",
+        "Rank6": "4000.0"
+      }
+    },
+    "Valuable": {
+      "Xp": {
+        "Rank1": "0.18",
+        "Rank2": "0.18",
+        "Rank3": "0.18",
+        "Rank4": "0.18",
+        "Rank5": "0.18",
+        "Rank6": "0.18"
+      },
+      "Revenue": {
+        "Rank1": "0.05",
+        "Rank2": "0.10",
+        "Rank3": "0.15",
+        "Rank4": "0.20",
+        "Rank5": "0.25",
+        "Rank6": "0.30"
+      }
+    },
+    "Fragile": {
+      "Xp": {
+        "Rank1": "0.22",
+        "Rank2": "0.22",
+        "Rank3": "0.22",
+        "Rank4": "0.22",
+        "Rank5": "0.22",
+        "Rank6": "0.22"
+      },
+      "Revenue": {
+        "Rank1": "0.05",
+        "Rank2": "0.10",
+        "Rank3": "0.15",
+        "Rank4": "0.20",
+        "Rank5": "0.25",
+        "Rank6": "0.30"
+      }
+    },
+    "Urgent": {
+      "Xp": {
+        "Rank1": "0.30",
+        "Rank2": "0.30",
+        "Rank3": "0.30",
+        "Rank4": "0.30",
+        "Rank5": "0.30",
+        "Rank6": "0.30"
+      },
+      "Revenue": {
+        "Rank1": "0.05",
+        "Rank2": "0.10",
+        "Rank3": "0.15",
+        "Rank4": "0.20",
+        "Rank5": "0.25",
+        "Rank6": "0.30"
+      },
+      "ImportantJobXpBonusCoef": "0.66",
+      "ImportantJobRevenueBonusCoef": "0.6"
+    },
+    "EcoDriving": {
+      "Saved": {
+        "Rank1": "0.10",
+        "Rank2": "0.15",
+        "Rank3": "0.20",
+        "Rank4": "0.25",
+        "Rank5": "0.30",
+        "Rank6": "0.35"
+      }
+    },
+    "ADR": {
+      "Xp": {
+        "Rank1": "0.21",
+        "Rank2": "0.21",
+        "Rank3": "0.21",
+        "Rank4": "0.21",
+        "Rank5": "0.21",
+        "Rank6": "0.21"
+      }
+    }
+  },
+  "SpecialEvents": {
+    "Unlocks": {
+      "JobsBeforeFirstLoan": "2",
+      "JobsBeforeCompanyInvitation": "2",
+      "FirstDealerUnlockDelay": "120",
+      "FirstJobPreferredRadius": "0",
+      "TrailersUnlockLevel": "5"
+    },
+    "Credit": {
+      "LevelTier1": "0",
+      "LimitTier1": "100000",
+      "LevelTier2": "3",
+      "LimitTier2": "500000"
+    }
+  },
+  "UsedVehicles": {
+    "Generation": {
+      "TruckGenerationGameTimeMin": "1440",
+      "TruckGenerationGameTimeMax": "2160",
+      "TruckExpirationGameTimeMin": "2880",
+      "TruckExpirationGameTimeMax": "4320",
+      "TruckCountMin": "12",
+      "TruckCountMax": "18"
+    },
+    "Odometer": {
+      "TruckOdometerLimitValues": "100000",
+      "TruckOdometerLimitLevels": "3",
+      "TruckOdometerRangeCoef": "0.9",
+      "DealerTruckOdometerMin": "1000",
+      "DealerTruckOdometerMax": "100000"
+    },
+    "Wear": {
+      "ChassisMin": "0.0",
+      "ChassisMax": "0.0",
+      "WheelsMin": "0.0",
+      "WheelsMax": "0.0",
+      "EngineMin": "0.0",
+      "EngineMax": "0.0",
+      "TransmissionMin": "0.0",
+      "TransmissionMax": "0.0",
+      "CabinMin": "0.0",
+      "CabinMax": "0.0"
+    },
+    "UnfixableWear": {
+      "LimitValues": "0.15",
+      "LimitLevels": "3",
+      "ChassisMin": "0.0",
+      "ChassisMax": "0.4",
+      "WheelsMin": "0.0",
+      "WheelsMax": "0.4",
+      "EngineMin": "0.0",
+      "EngineMax": "0.4",
+      "TransmissionMin": "0.0",
+      "TransmissionMax": "0.4",
+      "CabinMin": "0.0",
+      "CabinMax": "0.4"
+    },
+    "Price": {
+      "FactorIntegrityWear": "3.0",
+      "FactorWearUnfixable": "2.0",
+      "FactorWear": "1.0",
+      "MinAccessoryPriceCoef": "0.1",
+      "PriceRangeCoef": "0.2"
+    }
+  }
+}

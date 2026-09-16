@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>app_icon.ico</ApplicationIcon>
+
+    <!-- Single-File & Standalone Konfiguration -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+
+    <!-- Erzwingt das Einbetten aller DLLs und nativer Bibliotheken -->
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+
+    <!-- Verhindert separate Sprachordner (de, fr, it...) im Publish-Ordner -->
+    <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+
+    <!-- Keine externen .pdb-Symboldateien erzeugen -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Templates und Presets als EmbeddedResource einbinden -->
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\**\*" />
+    <EmbeddedResource Include="Presets\**\*" />
+  </ItemGroup>
+
+</Project>
