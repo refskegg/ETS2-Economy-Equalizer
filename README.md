@@ -8,7 +8,7 @@ Ein schlankes Open-Source-Tool für **Euro Truck Simulator 2**, um die Spielwirt
 
 ## 🚚 Features (Was bereits funktioniert)
 
-- **Wirtschafts-Parameter anpassen:** Erträge pro Kilometer, Frachtraten, Garagenpreise, Kreditkonditionen und Treibstoffkosten.
+- **Wirtschafts-Parameter anpassen:** Erträge pro Kilometer, Frachtraten, Garagenpreise, Kreditkonditionen, Treibstoffkosten, Bußgelder, Polizeiverhalten etc.
 - **Direkter Mod-Export:** Erzeugt die fertige Ordnerstruktur und `.sii`-Konfigurationsdateien direkt für deinen `mod/`-Ordner.
 - **Keine Installation nötig:** Portable Single-File-Anwendung (`ETS2EE.exe`), die ohne Installer sofort startet.
 
