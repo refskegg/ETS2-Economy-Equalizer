@@ -37,7 +37,7 @@ namespace ETS2_ModTool
 
         public void Import(string content)
         {
-            // Kollision
+            // Collision
             Collision.TruckDamageCoef = ExtractValue(content, "truck_damage_coef", Collision.TruckDamageCoef);
             Collision.TrailerDamageCoef = ExtractValue(content, "trailer_damage_coef", Collision.TrailerDamageCoef);
             Collision.DraggedTrailerDamageCoef = ExtractValue(content, "dragged_trailer_damage_coef", Collision.DraggedTrailerDamageCoef);
@@ -45,7 +45,7 @@ namespace ETS2_ModTool
             Collision.SideDamageFactor = ExtractValue(content, "side_damage_factor", Collision.SideDamageFactor);
             Collision.RoofDamageFactor = ExtractValue(content, "roof_damage_factor", Collision.RoofDamageFactor);
 
-            // LKW Verteilung
+            // Truck distribution
             TruckDist.CabinDamageRatio = ExtractValue(content, "cabin_damage_ratio", TruckDist.CabinDamageRatio);
             TruckDist.ChassisDamageRatio = ExtractValue(content, "chassis_damage_ratio", TruckDist.ChassisDamageRatio);
             TruckDist.EngineDamageRatio = ExtractValue(content, "engine_damage_ratio", TruckDist.EngineDamageRatio);
@@ -58,7 +58,7 @@ namespace ETS2_ModTool
             TruckDist.TransmissionUnfixable = ExtractValue(content, "transmission_unfixable_damage_ratio", TruckDist.TransmissionUnfixable);
             TruckDist.WheelUnfixable = ExtractValue(content, "wheel_unfixable_damage_ratio", TruckDist.WheelUnfixable);
 
-            // Anhänger Verteilung
+            // Trailer distribution
             TrailerDist.TrailerBodyDamageRatio = ExtractValue(content, "trailer_body_damage_ratio", TrailerDist.TrailerBodyDamageRatio);
             TrailerDist.TrailerChassisDamageRatio = ExtractValue(content, "trailer_chassis_damage_ratio", TrailerDist.TrailerChassisDamageRatio);
             TrailerDist.TrailerWheelDamageRatio = ExtractValue(content, "trailer_wheel_damage_ratio", TrailerDist.TrailerWheelDamageRatio);
@@ -68,7 +68,7 @@ namespace ETS2_ModTool
             TrailerDist.TrailerChassisUnfixable = ExtractValue(content, "trailer_chassis_unfixable_damage_ratio", TrailerDist.TrailerChassisUnfixable);
             TrailerDist.TrailerWheelUnfixable = ExtractValue(content, "trailer_wheel_unfixable_damage_ratio", TrailerDist.TrailerWheelUnfixable);
 
-            // LKW Verschleiß
+            // Truck wear
             TruckWear.CabinWear = ExtractValue(content, "cabin_wear", TruckWear.CabinWear);
             TruckWear.ChassisWear = ExtractValue(content, "chassis_wear", TruckWear.ChassisWear);
             TruckWear.EngineWear = ExtractValue(content, "engine_wear", TruckWear.EngineWear);
@@ -81,7 +81,7 @@ namespace ETS2_ModTool
             TruckWear.TransmissionWearUnfixable = ExtractValue(content, "transmission_wear_unfixable", TruckWear.TransmissionWearUnfixable);
             TruckWear.WheelWearUnfixable = ExtractValue(content, "wheel_wear_unfixable", TruckWear.WheelWearUnfixable);
 
-            // Anhänger Verschleiß
+            // Trailer wear
             TrailerWear.TrailerBodyWear = ExtractValue(content, "trailer_body_wear", TrailerWear.TrailerBodyWear);
             TrailerWear.TrailerChassisWear = ExtractValue(content, "trailer_chassis_wear", TrailerWear.TrailerChassisWear);
             TrailerWear.TrailerWheelWear = ExtractValue(content, "trailer_wheel_wear", TrailerWear.TrailerWheelWear);
@@ -93,7 +93,7 @@ namespace ETS2_ModTool
 
         public void Export(ref string content)
         {
-            // Kollision schreiben
+            // Write collision
             UpdateParameter(ref content, "truck_damage_coef", Collision.TruckDamageCoef);
             UpdateParameter(ref content, "trailer_damage_coef", Collision.TrailerDamageCoef);
             UpdateParameter(ref content, "dragged_trailer_damage_coef", Collision.DraggedTrailerDamageCoef);
@@ -101,7 +101,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "side_damage_factor", Collision.SideDamageFactor);
             UpdateParameter(ref content, "roof_damage_factor", Collision.RoofDamageFactor);
 
-            // LKW Verteilung schreiben
+            // Write truck distribution
             UpdateParameter(ref content, "cabin_damage_ratio", TruckDist.CabinDamageRatio);
             UpdateParameter(ref content, "chassis_damage_ratio", TruckDist.ChassisDamageRatio);
             UpdateParameter(ref content, "engine_damage_ratio", TruckDist.EngineDamageRatio);
@@ -114,7 +114,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "transmission_unfixable_damage_ratio", TruckDist.TransmissionUnfixable);
             UpdateParameter(ref content, "wheel_unfixable_damage_ratio", TruckDist.WheelUnfixable);
 
-            // Anhänger Verteilung schreiben
+            // Write trailer distribution
             UpdateParameter(ref content, "trailer_body_damage_ratio", TrailerDist.TrailerBodyDamageRatio);
             UpdateParameter(ref content, "trailer_chassis_damage_ratio", TrailerDist.TrailerChassisDamageRatio);
             UpdateParameter(ref content, "trailer_wheel_damage_ratio", TrailerDist.TrailerWheelDamageRatio);
@@ -124,7 +124,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "trailer_chassis_unfixable_damage_ratio", TrailerDist.TrailerChassisUnfixable);
             UpdateParameter(ref content, "trailer_wheel_unfixable_damage_ratio", TrailerDist.TrailerWheelUnfixable);
 
-            // LKW Verschleiß schreiben
+            // Write truck wear
             UpdateParameter(ref content, "cabin_wear", TruckWear.CabinWear);
             UpdateParameter(ref content, "chassis_wear", TruckWear.ChassisWear);
             UpdateParameter(ref content, "engine_wear", TruckWear.EngineWear);
@@ -137,7 +137,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "transmission_wear_unfixable", TruckWear.TransmissionWearUnfixable);
             UpdateParameter(ref content, "wheel_wear_unfixable", TruckWear.WheelWearUnfixable);
 
-            // Anhänger Verschleiß schreiben
+            // Write trailer wear
             UpdateParameter(ref content, "trailer_body_wear", TrailerWear.TrailerBodyWear);
             UpdateParameter(ref content, "trailer_chassis_wear", TrailerWear.TrailerChassisWear);
             UpdateParameter(ref content, "trailer_wheel_wear", TrailerWear.TrailerWheelWear);

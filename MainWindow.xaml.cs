@@ -33,7 +33,7 @@ namespace ETS2_ModTool
             RebuildDashboard();
         }
 
-        // --- Sprach-Umschalter (DE / EN) ---
+        // --- Language Switcher (DE / EN) ---
         private void btnLanguage_Click(object sender, RoutedEventArgs e)
         {
             LocalizationManager.CurrentLanguage = LocalizationManager.CurrentLanguage == AppLanguage.DE
@@ -125,7 +125,7 @@ namespace ETS2_ModTool
                 "Shows or hides all detailed parameter explanations at once");
         }
 
-        // --- Navigation & Suche ---
+        // --- Navigation & Search ---
         private void NavButton_Checked(object sender, RoutedEventArgs e)
         {
             if (isInitializing) return;
@@ -225,7 +225,7 @@ namespace ETS2_ModTool
             RebuildDashboard();
         }
 
-        // --- Dynamischer Dashboard-Generator (aus den C#-Klassen & LocalizationManager) ---
+        // --- Dynamic Dashboard Generator (from C# classes & LocalizationManager) ---
         private void RebuildDashboard()
         {
             if (cardsContainer == null || currentSettings == null) return;
@@ -737,7 +737,7 @@ namespace ETS2_ModTool
                 || description.Contains(filter, StringComparison.OrdinalIgnoreCase);
         }
 
-        // --- Presets & Datei-Aktionen ---
+        // --- Presets & File Actions ---
         private void cmbPresets_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (isInitializing || isUpdatingPresetCombo || modManager == null) return;

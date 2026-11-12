@@ -49,7 +49,7 @@ namespace ETS2_ModTool
 
         public void Import(string content)
         {
-            // 1. Garagen & LKW
+            // 1. Garages & Trucks
             Garage.TruckRefund = ExtractValue(content, "truck_refund", Garage.TruckRefund);
             Garage.PriceSmallGarage = ExtractValue(content, "price_small_garage", Garage.PriceSmallGarage);
             Garage.PriceGarageUpgrade = ExtractValue(content, "price_garage_upgrade", Garage.PriceGarageUpgrade);
@@ -59,7 +59,7 @@ namespace ETS2_ModTool
             Garage.FuelDiscountInGarage = ExtractValue(content, "fuel_discount_in_garage", Garage.FuelDiscountInGarage);
             Garage.TruckCountForOnline = ExtractValue(content, "truck_count_for_online", Garage.TruckCountForOnline);
 
-            // 2. Fracht & Einnahmen
+            // 2. Cargo & Revenue
             Revenue.RevenuePerKmBase = ExtractValue(content, "revenue_per_km_base", Revenue.RevenuePerKmBase);
             Revenue.FixedRevenue = ExtractValue(content, "fixed_revenue", Revenue.FixedRevenue);
             Revenue.RevenueCoefPerKm = ExtractValue(content, "revenue_coef_per_km", Revenue.RevenueCoefPerKm);
@@ -69,7 +69,7 @@ namespace ETS2_ModTool
             Revenue.CargoDamageCost = ExtractValue(content, "cargo_damage_cost", Revenue.CargoDamageCost);
             Revenue.CargoDamageCostFactor = ExtractValue(content, "cargo_damage_cost_factor", Revenue.CargoDamageCostFactor);
 
-            // 3. Zeitfenster & Lieferfristen
+            // 3. Delivery Windows & Deadlines
             DeliveryWindows.LateDeliveryMaxOvertime0 = ExtractArrayValue(content, "late_delivery_max_overtime", 0, DeliveryWindows.LateDeliveryMaxOvertime0);
             DeliveryWindows.LateDeliveryMaxOvertime1 = ExtractArrayValue(content, "late_delivery_max_overtime", 1, DeliveryWindows.LateDeliveryMaxOvertime1);
             DeliveryWindows.LateDeliveryMaxOvertime2 = ExtractArrayValue(content, "late_delivery_max_overtime", 2, DeliveryWindows.LateDeliveryMaxOvertime2);
@@ -80,7 +80,7 @@ namespace ETS2_ModTool
             DeliveryWindows.DeliveryWindowCoef1 = ExtractArrayValue(content, "delivery_window_coef", 1, DeliveryWindows.DeliveryWindowCoef1);
             DeliveryWindows.DeliveryWindowCoef2 = ExtractArrayValue(content, "delivery_window_coef", 2, DeliveryWindows.DeliveryWindowCoef2);
 
-            // 4. Zeit, Ermüdung & Jobs
+            // 4. Time, Fatigue & Jobs
             Simulation.SimulationAvgSpeed = ExtractValue(content, "simulation_avg_speed", Simulation.SimulationAvgSpeed);
             Simulation.MaximumDrivingTime = ExtractValue(content, "maximum_driving_time", Simulation.MaximumDrivingTime);
             Simulation.SleepingTime = ExtractValue(content, "sleeping_time", Simulation.SleepingTime);
@@ -89,7 +89,7 @@ namespace ETS2_ModTool
             Simulation.CargoValidityMin = ExtractValue(content, "cargo_validity_min", Simulation.CargoValidityMin);
             Simulation.CargoValidityMax = ExtractValue(content, "cargo_validity_max", Simulation.CargoValidityMax);
 
-            // 5. Notdienst & Tanken
+            // 5. Emergency Services & Refueling
             Service.TowPriceBase = ExtractValue(content, "tow_price_base", Service.TowPriceBase);
             Service.TowPriceFactor = ExtractValue(content, "tow_price_factor", Service.TowPriceFactor);
             Service.TowTimeBase = ExtractValue(content, "tow_time_base", Service.TowTimeBase);
@@ -104,7 +104,7 @@ namespace ETS2_ModTool
             Service.RechargePrice = ExtractValue(content, "recharge_price", Service.RechargePrice);
             Service.RechargeTimeBase = ExtractValue(content, "recharge_time_base", Service.RechargeTimeBase);
 
-            // 6. KI-Fahrer
+            // 6. AI Drivers
             Driver.MinimalDriverSalary = ExtractValue(content, "minimal_driver_salary", Driver.MinimalDriverSalary);
             Driver.DriverRevenueCoefPerKm = ExtractValue(content, "driver_revenue_coef_per_km", Driver.DriverRevenueCoefPerKm);
             Driver.DriverCargoMarketRevenueCoefPerKm = ExtractValue(content, "driver_cargo_market_revenue_coef_per_km", Driver.DriverCargoMarketRevenueCoefPerKm);
@@ -135,7 +135,7 @@ namespace ETS2_ModTool
 
         public void Export(ref string content)
         {
-            // 1. Garagen & LKW
+            // 1. Garages & Trucks
             UpdateParameter(ref content, "truck_refund", Garage.TruckRefund);
             UpdateParameter(ref content, "price_small_garage", Garage.PriceSmallGarage);
             UpdateParameter(ref content, "price_garage_upgrade", Garage.PriceGarageUpgrade);
@@ -145,7 +145,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "fuel_discount_in_garage", Garage.FuelDiscountInGarage);
             UpdateParameter(ref content, "truck_count_for_online", Garage.TruckCountForOnline);
 
-            // 2. Fracht & Einnahmen
+            // 2. Cargo & Revenue
             UpdateParameter(ref content, "revenue_per_km_base", Revenue.RevenuePerKmBase);
             UpdateParameter(ref content, "fixed_revenue", Revenue.FixedRevenue);
             UpdateParameter(ref content, "revenue_coef_per_km", Revenue.RevenueCoefPerKm);
@@ -155,7 +155,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "cargo_damage_cost", Revenue.CargoDamageCost);
             UpdateParameter(ref content, "cargo_damage_cost_factor", Revenue.CargoDamageCostFactor);
 
-            // 3. Zeitfenster & Lieferfristen
+            // 3. Delivery Windows & Deadlines
             UpdateArrayParameter(ref content, "late_delivery_max_overtime", 0, DeliveryWindows.LateDeliveryMaxOvertime0);
             UpdateArrayParameter(ref content, "late_delivery_max_overtime", 1, DeliveryWindows.LateDeliveryMaxOvertime1);
             UpdateArrayParameter(ref content, "late_delivery_max_overtime", 2, DeliveryWindows.LateDeliveryMaxOvertime2);
@@ -166,7 +166,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "delivery_window_coef", 1, DeliveryWindows.DeliveryWindowCoef1);
             UpdateArrayParameter(ref content, "delivery_window_coef", 2, DeliveryWindows.DeliveryWindowCoef2);
 
-            // 4. Zeit, Ermüdung & Jobs
+            // 4. Time, Fatigue & Jobs
             UpdateParameter(ref content, "simulation_avg_speed", Simulation.SimulationAvgSpeed);
             UpdateParameter(ref content, "maximum_driving_time", Simulation.MaximumDrivingTime);
             UpdateParameter(ref content, "sleeping_time", Simulation.SleepingTime);
@@ -175,7 +175,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "cargo_validity_min", Simulation.CargoValidityMin);
             UpdateParameter(ref content, "cargo_validity_max", Simulation.CargoValidityMax);
 
-            // 5. Notdienst & Tanken
+            // 5. Emergency Services & Refueling
             UpdateParameter(ref content, "tow_price_base", Service.TowPriceBase);
             UpdateParameter(ref content, "tow_price_factor", Service.TowPriceFactor);
             UpdateParameter(ref content, "tow_time_base", Service.TowTimeBase);
@@ -190,7 +190,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "recharge_price", Service.RechargePrice);
             UpdateParameter(ref content, "recharge_time_base", Service.RechargeTimeBase);
 
-            // 6. KI-Fahrer
+            // 6. AI Drivers
             UpdateParameter(ref content, "minimal_driver_salary", Driver.MinimalDriverSalary);
             UpdateParameter(ref content, "driver_revenue_coef_per_km", Driver.DriverRevenueCoefPerKm);
             UpdateParameter(ref content, "driver_cargo_market_revenue_coef_per_km", Driver.DriverCargoMarketRevenueCoefPerKm);

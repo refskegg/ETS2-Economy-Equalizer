@@ -21,7 +21,7 @@ namespace ETS2_ModTool
             Directory.CreateDirectory(tempFolder);
             ZipFile.ExtractToDirectory(filePath, tempFolder);
 
-            // Manifest auslesen (Mod-Name & Autor wiederherstellen)
+            // Read manifest (restore mod name & author)
             string manifestPath = Path.Combine(tempFolder, "manifest.sii");
             if (File.Exists(manifestPath))
             {
@@ -43,31 +43,31 @@ namespace ETS2_ModTool
             string bankPath = Path.Combine(tempFolder, "def", "bank_data.sii");
             if (File.Exists(bankPath)) settings.Bank.Import(File.ReadAllText(bankPath));
 
-            // 2. Schaden
+            // 2. Damage
             string damagePath = Path.Combine(tempFolder, "def", "damage_data.sii");
             if (File.Exists(damagePath)) settings.Damage.Import(File.ReadAllText(damagePath));
 
-            // 3. Wirtschaft
+            // 3. Economy
             string economyPath = Path.Combine(tempFolder, "def", "economy_data.sii");
             if (File.Exists(economyPath)) settings.Economy.Import(File.ReadAllText(economyPath));
 
-            // 4. Polizei
+            // 4. Police
             string policePath = Path.Combine(tempFolder, "def", "police_data.sii");
             if (File.Exists(policePath)) settings.Police.Import(File.ReadAllText(policePath));
 
-            // 5. Werkstatt
+            // 5. Service / Workshop
             string servicePath = Path.Combine(tempFolder, "def", "service_data.sii");
             if (File.Exists(servicePath)) settings.Service.Import(File.ReadAllText(servicePath));
 
-            // 6. Fähigkeiten
+            // 6. Skills
             string skillPath = Path.Combine(tempFolder, "def", "skill_data.sii");
             if (File.Exists(skillPath)) settings.Skills.Import(File.ReadAllText(skillPath));
 
-            // 7. Spezial-Events
+            // 7. Special Events
             string sePath = Path.Combine(tempFolder, "def", "special_event_data.sii");
             if (File.Exists(sePath)) settings.SpecialEvents.Import(File.ReadAllText(sePath));
 
-            // 8. Gebrauchtfahrzeuge
+            // 8. Used Vehicles
             string usedPath = Path.Combine(tempFolder, "def", "used_vehicle_config.sii");
             string usedAltPath = Path.Combine(tempFolder, "def", "used_vehicle_assortment_config.sii");
             if (File.Exists(usedPath)) settings.UsedVehicles.Import(File.ReadAllText(usedPath));
@@ -87,10 +87,10 @@ namespace ETS2_ModTool
             string defDir = Path.Combine(workDir, "def");
             Directory.CreateDirectory(defDir);
 
-            // --- 1. Manifest & Beschreibung anlegen ---
+            // --- 1. Create manifest & description ---
             CreateManifest(workDir, meta);
 
-            // --- 2. .sii-Dateien aus Embedded Templates verarbeiten ---
+            // --- 2. Process .sii files from embedded templates ---
             ExportEmbeddedFile(defDir, "bank_data.sii", settings.Bank.Export);
             ExportEmbeddedFile(defDir, "damage_data.sii", settings.Damage.Export);
             ExportEmbeddedFile(defDir, "economy_data.sii", settings.Economy.Export);
@@ -100,7 +100,7 @@ namespace ETS2_ModTool
             ExportEmbeddedFile(defDir, "special_event_data.sii", settings.SpecialEvents.Export);
             ExportEmbeddedFile(defDir, "used_vehicle_config.sii", settings.UsedVehicles.Export);
 
-            // Als unkomprimiertes .scs verpacken
+            // Pack as uncompressed .scs archive
             ZipFile.CreateFromDirectory(workDir, targetScs, CompressionLevel.NoCompression, false);
             Directory.Delete(workDir, true);
         }
@@ -114,7 +114,7 @@ namespace ETS2_ModTool
             {
                 exportAction(ref content);
 
-                // Komma-Korrektur
+                // Replace decimal commas with dots
                 content = Regex.Replace(content, @"(?<=\d),(?=\d)", ".");
 
                 File.WriteAllText(Path.Combine(defDir, fileName), content, Utf8NoBom);
@@ -123,47 +123,39 @@ namespace ETS2_ModTool
 
         private void CreateManifest(string rootDir, ModMetadata meta)
         {
-            // --- Universell lesbare Beschreibung (DE / EN je nach aktiver Sprache) ---
-            string formattedDescription = LocalizationManager.CurrentLanguage == AppLanguage.EN
-                ? $@"=========================================
+            // --- Bilingual description (German & English) ---
+            string formattedDescription =
+$@"=========================================
         {meta.PackageName}
-        Configured by: {meta.Author}
+        Konfiguriert von / Configured by: {meta.Author}
         Tool: ETS2 Economy Equalizer by refskegg
         =========================================
 
-        [ OVERVIEW ]
-        This mod package customizes the internal game economy for a
-        balanced and personalized driving experience.
-        Generated with ETS2 Economy Equalizer by refskegg.
-
-        [ CUSTOMIZED AREAS ]
-        • Loans & Bank Interest: Adjusted limits, durations and rates
-        • Freight Revenue: Scaled payouts and distance bonuses
-        • Operating Costs: Fuel discounts, service & towing rates
-        • Police & Fines: Modified penalties, delays and probabilities
-        • Driver Skills: Custom XP rates, payouts and unlocks
-
-        -----------------------------------------
-        Powered by ETS2 Economy Equalizer
-        Developed by refskegg
-        ========================================="
-                : $@"=========================================
-        {meta.PackageName}
-        Konfiguriert von: {meta.Author}
-        Tool: ETS2 Economy Equalizer by refskegg
-        =========================================
-
-        [ ÜBERSICHT ]
+        [ DE - ÜBERSICHT ]
         Dieses Mod-Paket passt die interne Spielwirtschaft für ein 
         ausgewogenes und individuelles Spielerlebnis an.
         Generiert mit dem ETS2 Economy Equalizer by refskegg.
 
-        [ ANGEPASSTE BEREICHE ]
+        [ DE - ANGEPASSTE BEREICHE ]
         • Kredite & Bankzinsen: Angepasste Limits, Laufzeiten und Raten
         • Frachtvergütungen: Skalierte Einnahmen und Entfernungsboni
         • Betriebskosten: Treibstoffkosten, Werkstatt- und Abschlepptarife
         • Polizei & Bußgelder: Modifizierte Strafen und Toleranzen
         • Fähigkeiten: Individuelle XP-Raten und Freischaltungen
+
+        -----------------------------------------
+
+        [ EN - OVERVIEW ]
+        This mod package customizes the internal game economy for a
+        balanced and personalized driving experience.
+        Generated with ETS2 Economy Equalizer by refskegg.
+
+        [ EN - CUSTOMIZED AREAS ]
+        • Loans & Bank Interest: Adjusted limits, durations and rates
+        • Freight Revenue: Scaled payouts and distance bonuses
+        • Operating Costs: Fuel discounts, service & towing rates
+        • Police & Fines: Modified penalties, delays and probabilities
+        • Driver Skills: Custom XP rates, payouts and unlocks
 
         -----------------------------------------
         Powered by ETS2 Economy Equalizer
@@ -187,7 +179,7 @@ mod_package : .package_name
 }}";
             File.WriteAllText(Path.Combine(rootDir, "manifest.sii"), manifestContent, Utf8NoBom);
 
-            // mod_icon.jpg aus Ressourcen kopieren
+            // Copy mod_icon.jpg from embedded resources
             using (Stream? stream = OpenEmbeddedResourceStream("Templates.mod_icon.jpg"))
             {
                 if (stream != null)
@@ -200,7 +192,7 @@ mod_package : .package_name
             }
         }
 
-        // --- JSON Embedded Preset laden ---
+        // --- Load JSON embedded preset ---
         public ModSettings LoadEmbeddedPreset(string presetFileName)
         {
             string json = ReadResourceText($"Presets.{presetFileName}");
@@ -216,7 +208,7 @@ mod_package : .package_name
             return JsonSerializer.Deserialize<ModSettings>(json, options) ?? new ModSettings();
         }
 
-        // --- Hilfsfunktion: Textdatei aus interner Ressource auslesen ---
+        // --- Helper function: Read text file from embedded resource ---
         private string ReadResourceText(string relativeResourcePath)
         {
             using (Stream? stream = OpenEmbeddedResourceStream(relativeResourcePath))

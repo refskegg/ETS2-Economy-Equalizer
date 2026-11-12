@@ -138,10 +138,10 @@ namespace ETS2_ModTool
             string header = match.Groups["header"].Value;
             string inner = match.Groups["inner"].Value;
 
-            // Vorhandene Array-Zeilen dieses Attributs komplett entfernen
+            // Completely remove existing array lines of this attribute
             string cleaned = Regex.Replace(inner, $@"[ \t]*{propertyName}\[\]:[^\r\n]*(\r?\n)?", "");
 
-            // Genau 6 Zeilen sauber einrücken
+            // Indent 6 lines cleanly
             string newEntries =
                 $"\n\t{propertyName}[]: {values.Rank1}" +
                 $"\n\t{propertyName}[]: {values.Rank2}" +
@@ -150,7 +150,7 @@ namespace ETS2_ModTool
                 $"\n\t{propertyName}[]: {values.Rank5}" +
                 $"\n\t{propertyName}[]: {values.Rank6}\n";
 
-            // Block inklusive schließender Klammer '}' an der exakten Indexposition ersetzen
+            // Replace block including closing brace '}' at the exact index position
             string replacement = header + cleaned.TrimEnd() + newEntries + "}";
             content = content.Substring(0, match.Index) + replacement + content.Substring(match.Index + match.Length);
         }

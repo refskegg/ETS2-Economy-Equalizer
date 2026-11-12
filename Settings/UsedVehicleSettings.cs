@@ -37,7 +37,7 @@ namespace ETS2_ModTool
 
         public void Import(string content)
         {
-            // 1. Generation & Angebot
+            // 1. Generation & Offers
             Generation.TruckGenerationGameTimeMin = ExtractValue(content, "truck_generation_game_time_min", Generation.TruckGenerationGameTimeMin);
             Generation.TruckGenerationGameTimeMax = ExtractValue(content, "truck_generation_game_time_max", Generation.TruckGenerationGameTimeMax);
             Generation.TruckExpirationGameTimeMin = ExtractValue(content, "truck_expiration_game_time_min", Generation.TruckExpirationGameTimeMin);
@@ -45,14 +45,14 @@ namespace ETS2_ModTool
             Generation.TruckCountMin = ExtractValue(content, "truck_count_min", Generation.TruckCountMin);
             Generation.TruckCountMax = ExtractValue(content, "truck_count_max", Generation.TruckCountMax);
 
-            // 2. Kilometerstand
+            // 2. Odometer (Mileage)
             Odometer.TruckOdometerLimitValues = ExtractArrayValue(content, "truck_odometer_limit_values", Odometer.TruckOdometerLimitValues);
             Odometer.TruckOdometerLimitLevels = ExtractArrayValue(content, "truck_odometer_limit_levels", Odometer.TruckOdometerLimitLevels);
             Odometer.TruckOdometerRangeCoef = ExtractValue(content, "truck_odometer_range_coef", Odometer.TruckOdometerRangeCoef);
             Odometer.DealerTruckOdometerMin = ExtractValue(content, "dealer_truck_odometer_min", Odometer.DealerTruckOdometerMin);
             Odometer.DealerTruckOdometerMax = ExtractValue(content, "dealer_truck_odometer_max", Odometer.DealerTruckOdometerMax);
 
-            // 3. Reparierbarer Verschleiß
+            // 3. Fixable Wear
             Wear.ChassisMin = ExtractValue(content, "truck_chassis_wear_min", Wear.ChassisMin);
             Wear.ChassisMax = ExtractValue(content, "truck_chassis_wear_max", Wear.ChassisMax);
             Wear.WheelsMin = ExtractValue(content, "truck_wheels_wear_min", Wear.WheelsMin);
@@ -64,7 +64,7 @@ namespace ETS2_ModTool
             Wear.CabinMin = ExtractValue(content, "truck_cabin_wear_min", Wear.CabinMin);
             Wear.CabinMax = ExtractValue(content, "truck_cabin_wear_max", Wear.CabinMax);
 
-            // 4. Unreparierbarer Verschleiß
+            // 4. Unfixable Wear
             UnfixableWear.LimitValues = ExtractArrayValue(content, "truck_wear_unfixable_limit_values", UnfixableWear.LimitValues);
             UnfixableWear.LimitLevels = ExtractArrayValue(content, "truck_wear_unfixable_limit_levels", UnfixableWear.LimitLevels);
             UnfixableWear.ChassisMin = ExtractValue(content, "truck_chassis_wear_unfixable_min", UnfixableWear.ChassisMin);
@@ -78,7 +78,7 @@ namespace ETS2_ModTool
             UnfixableWear.CabinMin = ExtractValue(content, "truck_cabin_wear_unfixable_min", UnfixableWear.CabinMin);
             UnfixableWear.CabinMax = ExtractValue(content, "truck_cabin_wear_unfixable_max", UnfixableWear.CabinMax);
 
-            // 5. Preisfaktoren
+            // 5. Price Factors
             Price.FactorIntegrityWear = ExtractValue(content, "truck_price_factor_integrity_wear", Price.FactorIntegrityWear);
             Price.FactorWearUnfixable = ExtractValue(content, "truck_price_factor_wear_unfixable", Price.FactorWearUnfixable);
             Price.FactorWear = ExtractValue(content, "truck_price_factor_wear", Price.FactorWear);
@@ -88,7 +88,7 @@ namespace ETS2_ModTool
 
         public void Export(ref string content)
         {
-            // 1. Generation & Angebot schreiben
+            // 1. Write generation & offers
             UpdateParameter(ref content, "truck_generation_game_time_min", Generation.TruckGenerationGameTimeMin);
             UpdateParameter(ref content, "truck_generation_game_time_max", Generation.TruckGenerationGameTimeMax);
             UpdateParameter(ref content, "truck_expiration_game_time_min", Generation.TruckExpirationGameTimeMin);
@@ -96,14 +96,14 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "truck_count_min", Generation.TruckCountMin);
             UpdateParameter(ref content, "truck_count_max", Generation.TruckCountMax);
 
-            // 2. Kilometerstand schreiben
+            // 2. Write odometer (mileage)
             UpdateArrayParameter(ref content, "truck_odometer_limit_values", Odometer.TruckOdometerLimitValues);
             UpdateArrayParameter(ref content, "truck_odometer_limit_levels", Odometer.TruckOdometerLimitLevels);
             UpdateParameter(ref content, "truck_odometer_range_coef", Odometer.TruckOdometerRangeCoef);
             UpdateParameter(ref content, "dealer_truck_odometer_min", Odometer.DealerTruckOdometerMin);
             UpdateParameter(ref content, "dealer_truck_odometer_max", Odometer.DealerTruckOdometerMax);
 
-            // 3. Reparierbarer Verschleiß schreiben
+            // 3. Write fixable wear
             UpdateParameter(ref content, "truck_chassis_wear_min", Wear.ChassisMin);
             UpdateParameter(ref content, "truck_chassis_wear_max", Wear.ChassisMax);
             UpdateParameter(ref content, "truck_wheels_wear_min", Wear.WheelsMin);
@@ -115,7 +115,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "truck_cabin_wear_min", Wear.CabinMin);
             UpdateParameter(ref content, "truck_cabin_wear_max", Wear.CabinMax);
 
-            // 4. Unreparierbarer Verschleiß schreiben
+            // 4. Write unfixable wear
             UpdateArrayParameter(ref content, "truck_wear_unfixable_limit_values", UnfixableWear.LimitValues);
             UpdateArrayParameter(ref content, "truck_wear_unfixable_limit_levels", UnfixableWear.LimitLevels);
             UpdateParameter(ref content, "truck_chassis_wear_unfixable_min", UnfixableWear.ChassisMin);
@@ -129,7 +129,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "truck_cabin_wear_unfixable_min", UnfixableWear.CabinMin);
             UpdateParameter(ref content, "truck_cabin_wear_unfixable_max", UnfixableWear.CabinMax);
 
-            // 5. Preisfaktoren schreiben
+            // 5. Write price factors
             UpdateParameter(ref content, "truck_price_factor_integrity_wear", Price.FactorIntegrityWear);
             UpdateParameter(ref content, "truck_price_factor_wear_unfixable", Price.FactorWearUnfixable);
             UpdateParameter(ref content, "truck_price_factor_wear", Price.FactorWear);

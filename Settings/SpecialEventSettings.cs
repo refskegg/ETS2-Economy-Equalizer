@@ -27,7 +27,7 @@ namespace ETS2_ModTool
             Unlocks.FirstJobPreferredRadius = ExtractValue(content, "first_job_preferred_radius", Unlocks.FirstJobPreferredRadius);
             Unlocks.TrailersUnlockLevel = ExtractValue(content, "trailers_unlock_level", Unlocks.TrailersUnlockLevel);
 
-            // 2. Kredit-Stufen (Reihenfolge der Array-Einträge im File)
+            // 2. Credit tiers (order of array entries in the file)
             MatchCollection levelMatches = new Regex(@"level_for_credit_raise\[\]:\s*(?<value>[0-9eE.-]+)").Matches(content);
             MatchCollection limitMatches = new Regex(@"credit_limit\[\]:\s*(?<value>[0-9eE.-]+)").Matches(content);
 
@@ -42,14 +42,14 @@ namespace ETS2_ModTool
 
         public void Export(ref string content)
         {
-            // 1. Unlocks & Delays schreiben
+            // 1. Write unlocks & delays
             UpdateParameter(ref content, "jobs_before_first_loan", Unlocks.JobsBeforeFirstLoan);
             UpdateParameter(ref content, "jobs_before_company_invitation", Unlocks.JobsBeforeCompanyInvitation);
             UpdateParameter(ref content, "first_dealer_unlock_delay", Unlocks.FirstDealerUnlockDelay);
             UpdateParameter(ref content, "first_job_preferred_radius", Unlocks.FirstJobPreferredRadius);
             UpdateParameter(ref content, "trailers_unlock_level", Unlocks.TrailersUnlockLevel);
 
-            // 2. Kredit-Stufen schreiben
+            // 2. Write credit tiers
             UpdateSequentialArrayItem(ref content, "level_for_credit_raise", 0, Credit.LevelTier1);
             UpdateSequentialArrayItem(ref content, "credit_limit", 0, Credit.LimitTier1);
             UpdateSequentialArrayItem(ref content, "level_for_credit_raise", 1, Credit.LevelTier2);

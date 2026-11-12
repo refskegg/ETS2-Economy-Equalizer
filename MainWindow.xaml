@@ -1,7 +1,7 @@
 <Window x:Class="ETS2_ModTool.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ETS2 Economy Equalizer v1.0"
+        Title="ETS2 Economy Equalizer v1.0-legacy"
         Width="1180" Height="780"
         MinWidth="960" MinHeight="620"
         WindowStartupLocation="CenterScreen"
@@ -49,7 +49,7 @@
                                     <StackPanel Orientation="Horizontal" Margin="0,1,0,0">
                                         <TextBlock Text="EQUALIZER" FontSize="9.5" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" VerticalAlignment="Center"/>
                                         <Border Background="#2A303C" BorderBrush="#374151" BorderThickness="1" CornerRadius="3" Padding="4,0.5" Margin="6,0,0,0" VerticalAlignment="Center">
-                                            <TextBlock Text="v1.0" FontSize="9" FontWeight="Bold" Foreground="#D1D5DB"/>
+                                            <TextBlock Text="v1.0-legacy" FontSize="9" FontWeight="Bold" Foreground="#D1D5DB"/>
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>
@@ -105,7 +105,7 @@
                     <!-- Sidebar Version & Author Footer -->
                     <Border Grid.Row="3" Padding="18,10" BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="0,1,0,0">
                         <Grid>
-                            <TextBlock Text="Version 1.0.0" FontSize="11" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                            <TextBlock Text="Version 1.0.0-legacy" FontSize="11" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
                             <TextBlock Text="by refskegg" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>

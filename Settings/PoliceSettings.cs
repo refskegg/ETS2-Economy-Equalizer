@@ -43,7 +43,7 @@ namespace ETS2_ModTool
 
         public void Import(string content)
         {
-            // 1. Allgemeines & Progression
+            // 1. General & Progression
             General.FineFactorBase = ExtractValue(content, "fine_factor_base", General.FineFactorBase);
             General.FineFactorStep = ExtractValue(content, "fine_factor_step", General.FineFactorStep);
             General.FineFactorLimit = ExtractValue(content, "fine_factor_limit", General.FineFactorLimit);
@@ -55,7 +55,7 @@ namespace ETS2_ModTool
             General.PoliceNearbyFineRate = ExtractValue(content, "police_nearby_fine_rate", General.PoliceNearbyFineRate);
             General.PoliceNearbyOffenceTimer = ExtractValue(content, "police_nearby_offence_timer", General.PoliceNearbyOffenceTimer);
 
-            // 2. Strafbeträge
+            // 2. Fine Amounts
             FineAmounts.CarCrash = ExtractArrayValue(content, "fine_amounts", 0, FineAmounts.CarCrash);
             FineAmounts.AvoidSleeping = ExtractArrayValue(content, "fine_amounts", 1, FineAmounts.AvoidSleeping);
             FineAmounts.WrongWay = ExtractArrayValue(content, "fine_amounts", 2, FineAmounts.WrongWay);
@@ -71,7 +71,7 @@ namespace ETS2_ModTool
             FineAmounts.DamagedVehicleUsage = ExtractArrayValue(content, "fine_amounts", 12, FineAmounts.DamagedVehicleUsage);
             FineAmounts.IllegalTrailerWeightStation = ExtractArrayValue(content, "fine_amounts", 13, FineAmounts.IllegalTrailerWeightStation);
 
-            // 3. Prüfverzögerung
+            // 3. Check Delays
             CheckDelays.CarCrash = ExtractArrayValue(content, "offence_check_delay", 0, CheckDelays.CarCrash);
             CheckDelays.AvoidSleeping = ExtractArrayValue(content, "offence_check_delay", 1, CheckDelays.AvoidSleeping);
             CheckDelays.WrongWay = ExtractArrayValue(content, "offence_check_delay", 2, CheckDelays.WrongWay);
@@ -82,7 +82,7 @@ namespace ETS2_ModTool
             CheckDelays.AvoidWeighing = ExtractArrayValue(content, "offence_check_delay", 7, CheckDelays.AvoidWeighing);
             CheckDelays.IllegalTrailer = ExtractArrayValue(content, "offence_check_delay", 8, CheckDelays.IllegalTrailer);
 
-            // 4. Prüfverzögerung Polizei vor Ort
+            // 4. Check Delays with Police Nearby
             PoliceCheckDelays.CarCrash = ExtractArrayValue(content, "offence_police_check_delay", 0, PoliceCheckDelays.CarCrash);
             PoliceCheckDelays.AvoidSleeping = ExtractArrayValue(content, "offence_police_check_delay", 1, PoliceCheckDelays.AvoidSleeping);
             PoliceCheckDelays.WrongWay = ExtractArrayValue(content, "offence_police_check_delay", 2, PoliceCheckDelays.WrongWay);
@@ -93,7 +93,7 @@ namespace ETS2_ModTool
             PoliceCheckDelays.AvoidWeighing = ExtractArrayValue(content, "offence_police_check_delay", 7, PoliceCheckDelays.AvoidWeighing);
             PoliceCheckDelays.IllegalTrailer = ExtractArrayValue(content, "offence_police_check_delay", 8, PoliceCheckDelays.IllegalTrailer);
 
-            // 5. Wahrscheinlichkeiten
+            // 5. Probabilities
             Probabilities.CarCrash = ExtractArrayValue(content, "offence_probabilty", 0, Probabilities.CarCrash);
             Probabilities.AvoidSleeping = ExtractArrayValue(content, "offence_probabilty", 1, Probabilities.AvoidSleeping);
             Probabilities.WrongWay = ExtractArrayValue(content, "offence_probabilty", 2, Probabilities.WrongWay);
@@ -109,7 +109,7 @@ namespace ETS2_ModTool
             Probabilities.DamagedVehicleUsage = ExtractArrayValue(content, "offence_probabilty", 12, Probabilities.DamagedVehicleUsage);
             Probabilities.IllegalTrailerWeightStation = ExtractArrayValue(content, "offence_probabilty", 13, Probabilities.IllegalTrailerWeightStation);
 
-            // 6. Wahrscheinlichkeiten Polizei vor Ort
+            // 6. Probabilities with Police Nearby
             PoliceProbabilities.CarCrash = ExtractArrayValue(content, "offence_police_probabilty", 0, PoliceProbabilities.CarCrash);
             PoliceProbabilities.AvoidSleeping = ExtractArrayValue(content, "offence_police_probabilty", 1, PoliceProbabilities.AvoidSleeping);
             PoliceProbabilities.WrongWay = ExtractArrayValue(content, "offence_police_probabilty", 2, PoliceProbabilities.WrongWay);
@@ -128,7 +128,7 @@ namespace ETS2_ModTool
 
         public void Export(ref string content)
         {
-            // 1. Allgemeines & Progression schreiben
+            // 1. Write general & progression
             UpdateParameter(ref content, "fine_factor_base", General.FineFactorBase);
             UpdateParameter(ref content, "fine_factor_step", General.FineFactorStep);
             UpdateParameter(ref content, "fine_factor_limit", General.FineFactorLimit);
@@ -140,7 +140,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "police_nearby_fine_rate", General.PoliceNearbyFineRate);
             UpdateParameter(ref content, "police_nearby_offence_timer", General.PoliceNearbyOffenceTimer);
 
-            // 2. Strafbeträge schreiben
+            // 2. Write fine amounts
             UpdateArrayParameter(ref content, "fine_amounts", 0, FineAmounts.CarCrash);
             UpdateArrayParameter(ref content, "fine_amounts", 1, FineAmounts.AvoidSleeping);
             UpdateArrayParameter(ref content, "fine_amounts", 2, FineAmounts.WrongWay);
@@ -156,7 +156,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "fine_amounts", 12, FineAmounts.DamagedVehicleUsage);
             UpdateArrayParameter(ref content, "fine_amounts", 13, FineAmounts.IllegalTrailerWeightStation);
 
-            // 3. Prüfverzögerung schreiben
+            // 3. Write check delays
             UpdateArrayParameter(ref content, "offence_check_delay", 0, CheckDelays.CarCrash);
             UpdateArrayParameter(ref content, "offence_check_delay", 1, CheckDelays.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_check_delay", 2, CheckDelays.WrongWay);
@@ -167,7 +167,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "offence_check_delay", 7, CheckDelays.AvoidWeighing);
             UpdateArrayParameter(ref content, "offence_check_delay", 8, CheckDelays.IllegalTrailer);
 
-            // 4. Prüfverzögerung Polizei vor Ort schreiben
+            // 4. Write check delays with police nearby
             UpdateArrayParameter(ref content, "offence_police_check_delay", 0, PoliceCheckDelays.CarCrash);
             UpdateArrayParameter(ref content, "offence_police_check_delay", 1, PoliceCheckDelays.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_police_check_delay", 2, PoliceCheckDelays.WrongWay);
@@ -178,7 +178,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "offence_police_check_delay", 7, PoliceCheckDelays.AvoidWeighing);
             UpdateArrayParameter(ref content, "offence_police_check_delay", 8, PoliceCheckDelays.IllegalTrailer);
 
-            // 5. Wahrscheinlichkeiten schreiben
+            // 5. Write probabilities
             UpdateArrayParameter(ref content, "offence_probabilty", 0, Probabilities.CarCrash);
             UpdateArrayParameter(ref content, "offence_probabilty", 1, Probabilities.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_probabilty", 2, Probabilities.WrongWay);
@@ -194,7 +194,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "offence_probabilty", 12, Probabilities.DamagedVehicleUsage);
             UpdateArrayParameter(ref content, "offence_probabilty", 13, FineAmounts.IllegalTrailerWeightStation != null ? Probabilities.IllegalTrailerWeightStation : "1.0");
 
-            // 6. Wahrscheinlichkeiten Polizei vor Ort schreiben
+            // 6. Write probabilities with police nearby
             UpdateArrayParameter(ref content, "offence_police_probabilty", 0, PoliceProbabilities.CarCrash);
             UpdateArrayParameter(ref content, "offence_police_probabilty", 1, PoliceProbabilities.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_police_probabilty", 2, PoliceProbabilities.WrongWay);
