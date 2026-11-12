@@ -7,37 +7,43 @@ namespace ETS2_ModTool
     {
         [Category("Polizei (police_data.sii)")]
         [DisplayName("1. Allgemeine Faktoren & Progression")]
+        [Description("Level-Skalierung der Strafen, progressive Blitzer-Berechnung und Streifenwagen-Multiplikatoren.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PoliceGeneralSettings General { get; set; } = new PoliceGeneralSettings();
 
         [Category("Polizei (police_data.sii)")]
         [DisplayName("2. Strafbeträge (€)")]
+        [Description("Basis-Bußgelder in Euro für jedes einzelne Verkehrsdelikt.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PoliceFineAmountSettings FineAmounts { get; set; } = new PoliceFineAmountSettings();
 
         [Category("Polizei (police_data.sii)")]
-        [DisplayName("3. Prüfverzögerung (Sekunden)")]
+        [DisplayName("3. Prüfverzögerung / Toleranzzeit (Sekunden)")]
+        [Description("Wie viele Sekunden ein Verstoß andauern muss, bevor eine automatische Strafe ausgelöst wird.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PoliceCheckDelaySettings CheckDelays { get; set; } = new PoliceCheckDelaySettings();
 
         [Category("Polizei (police_data.sii)")]
-        [DisplayName("4. Prüfverzögerung Polizei vor Ort (Sekunden)")]
+        [DisplayName("4. Prüfverzögerung bei Polizei vor Ort (Sekunden)")]
+        [Description("Verkürzte Toleranzzeit in Sekunden, wenn sich ein Streifenwagen im Verkehr direkt neben dir befindet.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PolicePoliceCheckDelaySettings PoliceCheckDelays { get; set; } = new PolicePoliceCheckDelaySettings();
 
         [Category("Polizei (police_data.sii)")]
-        [DisplayName("5. Verstoß-Wahrscheinlichkeit (0.0 - 1.0)")]
+        [DisplayName("5. Verstoß-Wahrscheinlichkeit ohne Streife (0.0 – 1.0)")]
+        [Description("Chance (0.0 = 0%, 1.0 = 100%), dass ein Verstoß auch ganz ohne Polizeiauto in der Nähe bestraft wird.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PoliceProbabilitySettings Probabilities { get; set; } = new PoliceProbabilitySettings();
 
         [Category("Polizei (police_data.sii)")]
-        [DisplayName("6. Wahrscheinlichkeit bei Polizei vor Ort (0.0 - 1.0)")]
+        [DisplayName("6. Wahrscheinlichkeit bei Polizei vor Ort (0.0 – 1.0)")]
+        [Description("Chance (0.0 = 0%, 1.0 = 100%), dass ein Streifenwagen im Verkehr deinen Verstoß bemerkt und ahndet.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public PolicePoliceProbabilitySettings PoliceProbabilities { get; set; } = new PolicePoliceProbabilitySettings();
 
         public void Import(string content)
         {
-            // 1. Allgemeines & Progression[cite: 2]
+            // 1. Allgemeines & Progression
             General.FineFactorBase = ExtractValue(content, "fine_factor_base", General.FineFactorBase);
             General.FineFactorStep = ExtractValue(content, "fine_factor_step", General.FineFactorStep);
             General.FineFactorLimit = ExtractValue(content, "fine_factor_limit", General.FineFactorLimit);
@@ -49,7 +55,7 @@ namespace ETS2_ModTool
             General.PoliceNearbyFineRate = ExtractValue(content, "police_nearby_fine_rate", General.PoliceNearbyFineRate);
             General.PoliceNearbyOffenceTimer = ExtractValue(content, "police_nearby_offence_timer", General.PoliceNearbyOffenceTimer);
 
-            // 2. Strafbeträge[cite: 2]
+            // 2. Strafbeträge
             FineAmounts.CarCrash = ExtractArrayValue(content, "fine_amounts", 0, FineAmounts.CarCrash);
             FineAmounts.AvoidSleeping = ExtractArrayValue(content, "fine_amounts", 1, FineAmounts.AvoidSleeping);
             FineAmounts.WrongWay = ExtractArrayValue(content, "fine_amounts", 2, FineAmounts.WrongWay);
@@ -65,7 +71,7 @@ namespace ETS2_ModTool
             FineAmounts.DamagedVehicleUsage = ExtractArrayValue(content, "fine_amounts", 12, FineAmounts.DamagedVehicleUsage);
             FineAmounts.IllegalTrailerWeightStation = ExtractArrayValue(content, "fine_amounts", 13, FineAmounts.IllegalTrailerWeightStation);
 
-            // 3. Prüfverzögerung[cite: 2]
+            // 3. Prüfverzögerung
             CheckDelays.CarCrash = ExtractArrayValue(content, "offence_check_delay", 0, CheckDelays.CarCrash);
             CheckDelays.AvoidSleeping = ExtractArrayValue(content, "offence_check_delay", 1, CheckDelays.AvoidSleeping);
             CheckDelays.WrongWay = ExtractArrayValue(content, "offence_check_delay", 2, CheckDelays.WrongWay);
@@ -76,7 +82,7 @@ namespace ETS2_ModTool
             CheckDelays.AvoidWeighing = ExtractArrayValue(content, "offence_check_delay", 7, CheckDelays.AvoidWeighing);
             CheckDelays.IllegalTrailer = ExtractArrayValue(content, "offence_check_delay", 8, CheckDelays.IllegalTrailer);
 
-            // 4. Prüfverzögerung Polizei vor Ort[cite: 2]
+            // 4. Prüfverzögerung Polizei vor Ort
             PoliceCheckDelays.CarCrash = ExtractArrayValue(content, "offence_police_check_delay", 0, PoliceCheckDelays.CarCrash);
             PoliceCheckDelays.AvoidSleeping = ExtractArrayValue(content, "offence_police_check_delay", 1, PoliceCheckDelays.AvoidSleeping);
             PoliceCheckDelays.WrongWay = ExtractArrayValue(content, "offence_police_check_delay", 2, PoliceCheckDelays.WrongWay);
@@ -87,7 +93,7 @@ namespace ETS2_ModTool
             PoliceCheckDelays.AvoidWeighing = ExtractArrayValue(content, "offence_police_check_delay", 7, PoliceCheckDelays.AvoidWeighing);
             PoliceCheckDelays.IllegalTrailer = ExtractArrayValue(content, "offence_police_check_delay", 8, PoliceCheckDelays.IllegalTrailer);
 
-            // 5. Wahrscheinlichkeiten[cite: 2]
+            // 5. Wahrscheinlichkeiten
             Probabilities.CarCrash = ExtractArrayValue(content, "offence_probabilty", 0, Probabilities.CarCrash);
             Probabilities.AvoidSleeping = ExtractArrayValue(content, "offence_probabilty", 1, Probabilities.AvoidSleeping);
             Probabilities.WrongWay = ExtractArrayValue(content, "offence_probabilty", 2, Probabilities.WrongWay);
@@ -103,7 +109,7 @@ namespace ETS2_ModTool
             Probabilities.DamagedVehicleUsage = ExtractArrayValue(content, "offence_probabilty", 12, Probabilities.DamagedVehicleUsage);
             Probabilities.IllegalTrailerWeightStation = ExtractArrayValue(content, "offence_probabilty", 13, Probabilities.IllegalTrailerWeightStation);
 
-            // 6. Wahrscheinlichkeiten Polizei vor Ort[cite: 2]
+            // 6. Wahrscheinlichkeiten Polizei vor Ort
             PoliceProbabilities.CarCrash = ExtractArrayValue(content, "offence_police_probabilty", 0, PoliceProbabilities.CarCrash);
             PoliceProbabilities.AvoidSleeping = ExtractArrayValue(content, "offence_police_probabilty", 1, PoliceProbabilities.AvoidSleeping);
             PoliceProbabilities.WrongWay = ExtractArrayValue(content, "offence_police_probabilty", 2, PoliceProbabilities.WrongWay);
@@ -122,7 +128,7 @@ namespace ETS2_ModTool
 
         public void Export(ref string content)
         {
-            // 1. Allgemeines & Progression schreiben[cite: 2]
+            // 1. Allgemeines & Progression schreiben
             UpdateParameter(ref content, "fine_factor_base", General.FineFactorBase);
             UpdateParameter(ref content, "fine_factor_step", General.FineFactorStep);
             UpdateParameter(ref content, "fine_factor_limit", General.FineFactorLimit);
@@ -134,7 +140,7 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "police_nearby_fine_rate", General.PoliceNearbyFineRate);
             UpdateParameter(ref content, "police_nearby_offence_timer", General.PoliceNearbyOffenceTimer);
 
-            // 2. Strafbeträge schreiben[cite: 2]
+            // 2. Strafbeträge schreiben
             UpdateArrayParameter(ref content, "fine_amounts", 0, FineAmounts.CarCrash);
             UpdateArrayParameter(ref content, "fine_amounts", 1, FineAmounts.AvoidSleeping);
             UpdateArrayParameter(ref content, "fine_amounts", 2, FineAmounts.WrongWay);
@@ -150,7 +156,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "fine_amounts", 12, FineAmounts.DamagedVehicleUsage);
             UpdateArrayParameter(ref content, "fine_amounts", 13, FineAmounts.IllegalTrailerWeightStation);
 
-            // 3. Prüfverzögerung schreiben[cite: 2]
+            // 3. Prüfverzögerung schreiben
             UpdateArrayParameter(ref content, "offence_check_delay", 0, CheckDelays.CarCrash);
             UpdateArrayParameter(ref content, "offence_check_delay", 1, CheckDelays.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_check_delay", 2, CheckDelays.WrongWay);
@@ -161,7 +167,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "offence_check_delay", 7, CheckDelays.AvoidWeighing);
             UpdateArrayParameter(ref content, "offence_check_delay", 8, CheckDelays.IllegalTrailer);
 
-            // 4. Prüfverzögerung Polizei vor Ort schreiben[cite: 2]
+            // 4. Prüfverzögerung Polizei vor Ort schreiben
             UpdateArrayParameter(ref content, "offence_police_check_delay", 0, PoliceCheckDelays.CarCrash);
             UpdateArrayParameter(ref content, "offence_police_check_delay", 1, PoliceCheckDelays.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_police_check_delay", 2, PoliceCheckDelays.WrongWay);
@@ -172,7 +178,7 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "offence_police_check_delay", 7, PoliceCheckDelays.AvoidWeighing);
             UpdateArrayParameter(ref content, "offence_police_check_delay", 8, PoliceCheckDelays.IllegalTrailer);
 
-            // 5. Wahrscheinlichkeiten schreiben[cite: 2]
+            // 5. Wahrscheinlichkeiten schreiben
             UpdateArrayParameter(ref content, "offence_probabilty", 0, Probabilities.CarCrash);
             UpdateArrayParameter(ref content, "offence_probabilty", 1, Probabilities.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_probabilty", 2, Probabilities.WrongWay);
@@ -186,9 +192,9 @@ namespace ETS2_ModTool
             UpdateArrayParameter(ref content, "offence_probabilty", 10, Probabilities.IllegalBorderCrossing);
             UpdateArrayParameter(ref content, "offence_probabilty", 11, Probabilities.HardShoulderViolation);
             UpdateArrayParameter(ref content, "offence_probabilty", 12, Probabilities.DamagedVehicleUsage);
-            UpdateArrayParameter(ref content, "offence_probabilty", 13, Probabilities.IllegalTrailerWeightStation);
+            UpdateArrayParameter(ref content, "offence_probabilty", 13, FineAmounts.IllegalTrailerWeightStation != null ? Probabilities.IllegalTrailerWeightStation : "1.0");
 
-            // 6. Wahrscheinlichkeiten Polizei vor Ort schreiben[cite: 2]
+            // 6. Wahrscheinlichkeiten Polizei vor Ort schreiben
             UpdateArrayParameter(ref content, "offence_police_probabilty", 0, PoliceProbabilities.CarCrash);
             UpdateArrayParameter(ref content, "offence_police_probabilty", 1, PoliceProbabilities.AvoidSleeping);
             UpdateArrayParameter(ref content, "offence_police_probabilty", 2, PoliceProbabilities.WrongWay);
@@ -232,299 +238,299 @@ namespace ETS2_ModTool
 
     public class PoliceGeneralSettings
     {
-        [DisplayName("Strafen Basis-Faktor")]
-        [Description("Start-Multiplikator für levelbasierte Strafen (Standard: 0.2)[cite: 2].")]
+        [DisplayName("Strafen Basis-Faktor (Level 0)")]
+        [Description("Standard: 0.2 (20%) | Auf Spielerlevel 0 zahlst du nur diesen Bruchteil der eigentlichen Bußgelder.\n• Tipp: Setze Basis-Faktor = 1.0, Schritt = 0.0 und Limit = 1.0, wenn Bußgelder ab Tag 1 immer exakt den vollen Euro-Betrag kosten sollen.")]
         public string FineFactorBase { get; set; } = "0.2";
 
-        [DisplayName("Strafen Faktor-Schritt je Level")]
-        [Description("Erhöhung des Faktors pro Spielerstufe (Standard: 0.08)[cite: 2].")]
+        [DisplayName("Strafen Faktor-Anstieg je Level")]
+        [Description("Standard: 0.08 (+8% je Level) | Um wie viel die Bußgelder mit jedem erreichten Spielerlevel teurer werden.")]
         public string FineFactorStep { get; set; } = "0.08";
 
-        [DisplayName("Strafen Faktor-Limit")]
-        [Description("Maximaler Multiplikator für levelbasierte Strafen (Standard: 1.0)[cite: 2].")]
+        [DisplayName("Strafen Faktor-Limit (Maximum)")]
+        [Description("Standard: 1.0 (100%) | Höchster Level-Multiplikator für Bußgelder (bei Standardwerten ab Level 10 erreicht).")]
         public string FineFactorLimit { get; set; } = "1.0";
 
-        [DisplayName("Rundung der Strafbeträge")]
-        [Description("Rundet Strafen auf Vielfache auf (Standard: 20)[cite: 2].")]
+        [DisplayName("Rundung der Strafbeträge (€)")]
+        [Description("Standard: 20 € | Berechnete Bußgelder werden immer auf ein glattes Vielfaches dieses Wertes gerundet (z. B. 10 € oder 20 €).")]
         public string FineAmountRounding { get; set; } = "20";
 
-        [DisplayName("Geschwindigkeits-Schritt")]
-        [Description("Schrittweite für Geschwindigkeitsverstöße (Standard: 2.777778)[cite: 2].")]
+        [DisplayName("Geschwindigkeits-Stufe (in m/s)")]
+        [Description("Standard: 2.777778 m/s (= 10 km/h) | Abstand der Geschwindigkeitsstufen, ab denen das Bußgeld progressiv ansteigt.\n• Umrechnung: ETS2 rechnet intern in Metern pro Sekunde (m/s × 3,6 = km/h). 2.777778 m/s entsprechen genau 10 km/h.")]
         public string FineOverspeedStep { get; set; } = "2.777778";
 
-        [DisplayName("Geschwindigkeits Multiplikator")]
-        [Description("Progressiver Multiplikator je Schritt (Standard: 1.877)[cite: 2].")]
+        [DisplayName("Geschwindigkeits-Multiplikator je Stufe")]
+        [Description("Standard: 1.877 | Mit jeder überschrittenen 10-km/h-Stufe wird das Blitzer-Bußgeld mit diesem Faktor potenziert.\n• Beispiel: Wer 30 km/h statt 10 km/h zu schnell fährt, zahlt dadurch deutlich mehr.")]
         public string FineOverspeedStepMultiplier { get; set; } = "1.877";
 
-        [DisplayName("Geschwindigkeits Multiplikator-Limit")]
-        [Description("Maximale Straferhöhung bei Raserei (Standard: 12.5)[cite: 2].")]
+        [DisplayName("Geschwindigkeits-Multiplikator Limit")]
+        [Description("Standard: 12.5 | Obergrenze für den progressiven Aufschlag bei extremen Geschwindigkeitsüberschreitungen.")]
         public string FineOverspeedMultiplierLimit { get; set; } = "12.5";
 
-        [DisplayName("Timer-Abbaurate (Sekunden)")]
-        [Description("Reale Sekunden, um den Timer um 1 Sekunde abzubauen (Standard: 120 = 2 Min)[cite: 2].")]
+        [DisplayName("Verstoß-Timer Abbaurate (Sekunden)")]
+        [Description("Standard: 120 Sek | Wie schnell der interne Zähler nach einem abgebrochenen Kurz-Verstoß (z. B. kurz im Gegenverkehr überholt) wieder auf 0 sinkt.")]
         public string TimerDecreaseRate { get; set; } = "120";
 
-        [DisplayName("Strafmultiplikator bei Polizei in Nähe")]
-        [Description("Multiplikator, wenn Streifenwagen in der Nähe ist (Standard: 2)[cite: 2].")]
+        [DisplayName("Aufschlag bei Polizei in Sichtweite")]
+        [Description("Standard: 2 (Doppelte Strafe!) | Multiplikator auf das Bußgeld, wenn du ein Vergehen direkt vor den Augen eines Streifenwagens begehst (1 = kein Aufschlag).")]
         public string PoliceNearbyFineRate { get; set; } = "2";
 
-        [DisplayName("Polizei-Intervall vor Ort (Sekunden)")]
-        [Description("Wie oft die anwesende Streife strafen darf (Standard: 15.0)[cite: 2].")]
+        [DisplayName("Polizeikontroll-Abklingzeit (Sekunden)")]
+        [Description("Standard: 15.0 Sek | Mindestabstand in Sekunden zwischen zwei Bußgeldern durch denselben Streifenwagen.")]
         public string PoliceNearbyOffenceTimer { get; set; } = "15.0";
     }
 
     public class PoliceFineAmountSettings
     {
-        [DisplayName("Unfall [0]")]
-        [Description("Standard: 400 €[cite: 2]")]
+        [DisplayName("Unfall mit KI-Fahrzeug")]
+        [Description("Standard: 400 € | Basis-Bußgeld bei einer verschuldeten Kollision mit einem anderen Verkehrsteilnehmer.")]
         public string CarCrash { get; set; } = "400";
 
-        [DisplayName("Müdigkeitsverstoß / Ruhezeit [1]")]
-        [Description("Standard: 500 €[cite: 2]")]
+        [DisplayName("Lenkzeitüberschreitung / Müdigkeit")]
+        [Description("Standard: 500 € | Basis-Bußgeld beim Ignorieren der vorgeschriebenen Ruhepause.")]
         public string AvoidSleeping { get; set; } = "500";
 
-        [DisplayName("Falsche Richtung / Geisterfahrer [2]")]
-        [Description("Standard: 100 €[cite: 2]")]
+        [DisplayName("Fahren in Gegenrichtung (Geisterfahrer)")]
+        [Description("Standard: 100 € | Basis-Bußgeld für das Befahren der Gegenfahrbahn.")]
         public string WrongWay { get; set; } = "100";
 
-        [DisplayName("Blitzer / Geschwindigkeitskamera [3]")]
-        [Description("Standard: 200 €[cite: 2]")]
+        [DisplayName("Stationärer Blitzer (Radarkamera)")]
+        [Description("Standard: 200 € | Basis-Bußgeld am festen Blitzer (wird je nach Tempo-Überschreitung noch mit dem Geschwindigkeits-Multiplikator erhöht).")]
         public string SpeedingCamera { get; set; } = "200";
 
-        [DisplayName("Fahren ohne Licht bei Nacht [4]")]
-        [Description("Standard: 150 €[cite: 2]")]
+        [DisplayName("Fahren ohne Abblendlicht (Nacht/Regen)")]
+        [Description("Standard: 150 € | Basis-Bußgeld, wenn du nachts oder im Tunnel ohne eingeschaltetes Licht fährst.")]
         public string NoLightsNight { get; set; } = "150";
 
-        [DisplayName("Rote Ampel [5]")]
-        [Description("Standard: 350 €[cite: 2]")]
+        [DisplayName("Rote Ampel überfahren")]
+        [Description("Standard: 350 € | Basis-Bußgeld beim Überfahren einer roten Ampel.")]
         public string RedLights { get; set; } = "350";
 
-        [DisplayName("Geschwindigkeitsübertretung allgemein [6]")]
-        [Description("Standard: 200 €[cite: 2]")]
+        [DisplayName("Geschwindigkeitsübertretung (Polizeistreife)")]
+        [Description("Standard: 200 € | Basis-Bußgeld, wenn dich ein Streifenwagen beim Zu-schnell-Fahren erwischt.")]
         public string Speeding { get; set; } = "200";
 
-        [DisplayName("Wiegestation umgangen [7]")]
-        [Description("Standard: 700 €[cite: 2]")]
+        [DisplayName("Wiegestation ignoriert")]
+        [Description("Standard: 700 € | Basis-Bußgeld, wenn du trotz Aufforderung an einer offenen Wiegekontrolle vorbeifährst.")]
         public string AvoidWeighing { get; set; } = "700";
 
-        [DisplayName("Illegaler Anhänger [8]")]
-        [Description("Standard: 1500 €[cite: 2]")]
+        [DisplayName("Illegaler Anhänger im Land")]
+        [Description("Standard: 1500 € | Basis-Bußgeld beim Ziehen eines im jeweiligen Land verbotenen Anhängertyps (z. B. HCT außerhalb Skandinaviens).")]
         public string IllegalTrailer { get; set; } = "1500";
 
-        [DisplayName("Inspektion umgangen [9]")]
-        [Description("Standard: 900 €[cite: 2]")]
+        [DisplayName("Grenzkontrolle / Inspektion umgangen")]
+        [Description("Standard: 900 € | Basis-Bußgeld beim Auslassen einer verpflichtenden Zoll-/Röntgenkontrolle an Grenzen.")]
         public string AvoidInspection { get; set; } = "900";
 
-        [DisplayName("Illegaler Grenzübergang [10]")]
-        [Description("Standard: 2000 €[cite: 2]")]
+        [DisplayName("Illegaler Grenzübergang")]
+        [Description("Standard: 2000 € | Basis-Bußgeld beim Durchfahren einer gesperrten Grenzspur ohne Abfertigung.")]
         public string IllegalBorderCrossing { get; set; } = "2000";
 
-        [DisplayName("Standstreifen blockiert / genutzt [11]")]
-        [Description("Standard: 150 €[cite: 2]")]
+        [DisplayName("Befahren des Standstreifens")]
+        [Description("Standard: 150 € | Basis-Bußgeld für das Überholen oder Fahren auf dem Pannenstreifen der Autobahn.")]
         public string HardShoulderViolation { get; set; } = "150";
 
-        [DisplayName("Fahrt mit beschädigtem Fahrzeug [12]")]
-        [Description("Standard: 500 €[cite: 2]")]
+        [DisplayName("Fahrt mit schwer beschädigtem LKW")]
+        [Description("Standard: 500 € | Basis-Bußgeld bei Polizeikontrollen, wenn dein Fahrzeug erhebliche Schäden aufweist.")]
         public string DamagedVehicleUsage { get; set; } = "500";
 
-        [DisplayName("Illegaler Anhänger an Wiegestation [13]")]
-        [Description("Standard: 1500 €[cite: 2]")]
+        [DisplayName("Illegaler Anhänger an Wiegestation")]
+        [Description("Standard: 1500 € | Basis-Bußgeld, wenn an einer Wiegestation ein unzulässiger Auflieger festgestellt wird.")]
         public string IllegalTrailerWeightStation { get; set; } = "1500";
     }
 
     public class PoliceCheckDelaySettings
     {
-        [DisplayName("Unfall [0]")]
-        [Description("Verzögerung in Sekunden (Standard: 0)[cite: 2].")]
+        [DisplayName("Unfall")]
+        [Description("Standard: 0 Sek | Verzögerung bis zur Strafe (0 = wird sofort beim Aufprall geprüft).")]
         public string CarCrash { get; set; } = "0";
 
-        [DisplayName("Müdigkeitsverstoß [1]")]
-        [Description("Verzögerung in Sekunden (Standard: 60)[cite: 2].")]
+        [DisplayName("Müdigkeitsverstoß")]
+        [Description("Standard: 60 Sek | Wie viele reale Sekunden du mit leerem Ruhezeit-Balken weiterfahren kannst, bevor die nächste Strafe geprüft wird.")]
         public string AvoidSleeping { get; set; } = "60";
 
-        [DisplayName("Falsche Richtung [2]")]
-        [Description("Verzögerung in Sekunden (Standard: 15)[cite: 2].")]
+        [DisplayName("Falsche Richtung")]
+        [Description("Standard: 15 Sek | Wie viele Sekunden du auf der Gegenfahrbahn fahren darfst (z. B. zum Überholen), bevor eine Strafe droht.")]
         public string WrongWay { get; set; } = "15";
 
-        [DisplayName("Blitzer [3]")]
-        [Description("Verzögerung in Sekunden (Standard: 0)[cite: 2].")]
+        [DisplayName("Blitzer")]
+        [Description("Standard: 0 Sek | Blitzer lösen unmittelbar bei Durchfahrt aus.")]
         public string SpeedingCamera { get; set; } = "0";
 
-        [DisplayName("Ohne Licht bei Nacht [4]")]
-        [Description("Verzögerung in Sekunden (Standard: 70)[cite: 2].")]
+        [DisplayName("Ohne Licht bei Nacht")]
+        [Description("Standard: 70 Sek | Nach wie vielen Sekunden Dunkelheit ohne Licht eine Strafe ausgelöst wird.")]
         public string NoLightsNight { get; set; } = "70";
 
-        [DisplayName("Rote Ampel [5]")]
-        [Description("Verzögerung in Sekunden (Standard: 0)[cite: 2].")]
+        [DisplayName("Rote Ampel")]
+        [Description("Standard: 0 Sek | Wird sofort beim Überfahren der Haltelinie geprüft.")]
         public string RedLights { get; set; } = "0";
 
-        [DisplayName("Geschwindigkeit [6]")]
-        [Description("Verzögerung in Sekunden (Standard: 60)[cite: 2].")]
+        [DisplayName("Geschwindigkeit")]
+        [Description("Standard: 60 Sek | Zeitintervall in Sekunden für automatische Tempo-Prüfungen ohne Streife.")]
         public string Speeding { get; set; } = "60";
 
-        [DisplayName("Wiegestation umgehen [7]")]
-        [Description("Verzögerung in Sekunden (Standard: 0)[cite: 2].")]
+        [DisplayName("Wiegestation umgehen")]
+        [Description("Standard: 0 Sek | Wird sofort beim Vorbeifahren an der Station ausgelöst.")]
         public string AvoidWeighing { get; set; } = "0";
 
-        [DisplayName("Illegaler Anhänger [8]")]
-        [Description("Verzögerung in Sekunden (Standard: 600)[cite: 2].")]
+        [DisplayName("Illegaler Anhänger")]
+        [Description("Standard: 600 Sek (10 Min) | Zeitintervall zwischen zwei Prüfungen auf illegale Auflieger.")]
         public string IllegalTrailer { get; set; } = "600";
     }
 
     public class PolicePoliceCheckDelaySettings
     {
-        [DisplayName("Unfall vor Streife [0]")]
-        [Description("Standard: 0 Sekunden[cite: 2]")]
+        [DisplayName("Unfall vor Streife")]
+        [Description("Standard: 0 Sek | Sofortige Ahndung, wenn eine Polizeistreife den Unfall sieht.")]
         public string CarCrash { get; set; } = "0";
 
-        [DisplayName("Müdigkeitsverstoß vor Streife [1]")]
-        [Description("Standard: 30 Sekunden[cite: 2]")]
+        [DisplayName("Müdigkeitsverstoß vor Streife")]
+        [Description("Standard: 30 Sek | Prüfverzögerung in Sekunden, wenn du übermüdet neben einem Streifenwagen fährst.")]
         public string AvoidSleeping { get; set; } = "30";
 
-        [DisplayName("Falsche Richtung vor Streife [2]")]
-        [Description("Standard: 5 Sekunden[cite: 2]")]
+        [DisplayName("Falsche Richtung vor Streife")]
+        [Description("Standard: 5 Sek | Wie viele Sekunden du vor einer Polizeistreife im Gegenverkehr sein darfst.")]
         public string WrongWay { get; set; } = "5";
 
-        [DisplayName("Blitzer vor Streife [3]")]
-        [Description("Standard: 0 Sekunden[cite: 2]")]
+        [DisplayName("Blitzer vor Streife")]
+        [Description("Standard: 0 Sek | Unmittelbare Auslösung.")]
         public string SpeedingCamera { get; set; } = "0";
 
-        [DisplayName("Ohne Licht vor Streife [4]")]
-        [Description("Standard: 7 Sekunden[cite: 2]")]
+        [DisplayName("Ohne Licht vor Streife")]
+        [Description("Standard: 7 Sek | Nach 7 Sekunden Fahrt ohne Licht neben einer Streife gibt es ein Bußgeld.")]
         public string NoLightsNight { get; set; } = "7";
 
-        [DisplayName("Rote Ampel vor Streife [5]")]
-        [Description("Standard: 0 Sekunden[cite: 2]")]
+        [DisplayName("Rote Ampel vor Streife")]
+        [Description("Standard: 0 Sek | Sofortige Strafe beim Rotlichtverstoß vor einem Streifenwagen.")]
         public string RedLights { get; set; } = "0";
 
-        [DisplayName("Geschwindigkeit vor Streife [6]")]
-        [Description("Standard: 3 Sekunden[cite: 2]")]
+        [DisplayName("Geschwindigkeit vor Streife")]
+        [Description("Standard: 3 Sek | Wie viele Sekunden du neben einem Polizeiauto zu schnell fahren darfst, bevor es blitzt (Tipp: 6–8 Sek verhindert unfaire Strafen direkt nach Ortsschildern!).")]
         public string Speeding { get; set; } = "3";
 
-        [DisplayName("Wiegestation vor Streife [7]")]
-        [Description("Standard: 0 Sekunden[cite: 2]")]
+        [DisplayName("Wiegestation vor Streife")]
+        [Description("Standard: 0 Sek | Sofortige Strafe.")]
         public string AvoidWeighing { get; set; } = "0";
 
-        [DisplayName("Illegaler Anhänger vor Streife [8]")]
-        [Description("Standard: 300 Sekunden[cite: 2]")]
+        [DisplayName("Illegaler Anhänger vor Streife")]
+        [Description("Standard: 300 Sek (5 Min) | Verzögerung bei Fahrt mit unzulässigem Trailer neben einer Streife.")]
         public string IllegalTrailer { get; set; } = "300";
     }
 
     public class PoliceProbabilitySettings
     {
-        [DisplayName("Unfall [0]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.7)[cite: 2]")]
+        [DisplayName("Unfall")]
+        [Description("Standard: 0.7 (70%) | Wahrscheinlichkeit einer Strafe bei einem Unfall ohne Polizei in der Nähe.\n• Realismus-Tipp: Setze diesen Wert (und Ampel/Gegenverkehr/Licht) auf '0.0', damit du nur noch bestraft wirst, wenn wirklich eine Polizeistreife oder ein Blitzer in der Nähe ist!")]
         public string CarCrash { get; set; } = "0.7";
 
-        [DisplayName("Müdigkeitsverstoß [1]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.3)[cite: 2]")]
+        [DisplayName("Müdigkeitsverstoß")]
+        [Description("Standard: 0.3 (30%) | Wahrscheinlichkeit einer automatischen Strafe (digitaler Fahrtenschreiber) bei Lenkzeitüberschreitung.")]
         public string AvoidSleeping { get; set; } = "0.3";
 
-        [DisplayName("Falsche Richtung [2]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.6)[cite: 2]")]
+        [DisplayName("Falsche Richtung")]
+        [Description("Standard: 0.6 (60%) | Wahrscheinlichkeit einer automatischen Strafe im Gegenverkehr ohne Polizei vor Ort (0.0 = nur bei Polizei).")]
         public string WrongWay { get; set; } = "0.6";
 
-        [DisplayName("Blitzer [3]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Blitzer")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit, dass ein aktiver Blitzerkasten tatsächlich auslöst (z. B. 0.85 = 15% der Blitzer sind Attrappen).")]
         public string SpeedingCamera { get; set; } = "1.0";
 
-        [DisplayName("Ohne Licht [4]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.3)[cite: 2]")]
+        [DisplayName("Ohne Licht")]
+        [Description("Standard: 0.3 (30%) | Wahrscheinlichkeit einer Strafe für Fahren ohne Licht ohne Polizei in der Nähe (0.0 = nur bei Polizei).")]
         public string NoLightsNight { get; set; } = "0.3";
 
-        [DisplayName("Rote Ampel [5]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.7)[cite: 2]")]
+        [DisplayName("Rote Ampel")]
+        [Description("Standard: 0.7 (70%) | Wahrscheinlichkeit einer Strafe an roten Ampeln ohne Polizei vor Ort (0.0 = keine unsichtbaren Ampelblitzer).")]
         public string RedLights { get; set; } = "0.7";
 
-        [DisplayName("Geschwindigkeit [6]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.0)[cite: 2]")]
+        [DisplayName("Geschwindigkeit (ohne Blitzer/Streife)")]
+        [Description("Standard: 0.0 (0%) | Sollte auf 0.0 bleiben, damit man nicht auf freier Strecke ohne Blitzer und ohne Polizei geblitzt wird.")]
         public string Speeding { get; set; } = "0.0";
 
-        [DisplayName("Wiegestation umgehen [7]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Wiegestation umgehen")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe beim Ignorieren einer Wiegestation.")]
         public string AvoidWeighing { get; set; } = "1.0";
 
-        [DisplayName("Illegaler Anhänger [8]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.0)[cite: 2]")]
+        [DisplayName("Illegaler Anhänger")]
+        [Description("Standard: 0.0 (0%) | Wahrscheinlichkeit einer automatischen Strafe ohne Polizei/Wiegestation.")]
         public string IllegalTrailer { get; set; } = "0.0";
 
-        [DisplayName("Inspektion umgehen [9]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Inspektion umgehen")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe beim Umgehen einer Grenzkontrolle.")]
         public string AvoidInspection { get; set; } = "1.0";
 
-        [DisplayName("Illegaler Grenzübertritt [10]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Illegaler Grenzübertritt")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe an Grenzen.")]
         public string IllegalBorderCrossing { get; set; } = "1.0";
 
-        [DisplayName("Standstreifen [11]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Standstreifen")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe auf dem Pannenstreifen ohne Polizei vor Ort (0.0 = nur bei Polizei).")]
         public string HardShoulderViolation { get; set; } = "1.0";
 
-        [DisplayName("Fahrzeug beschädigt [12]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Fahrzeug beschädigt")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe bei stark beschädigtem LKW an Kontrollstellen.")]
         public string DamagedVehicleUsage { get; set; } = "1.0";
 
-        [DisplayName("Illegaler Anhänger Wiegestation [13]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Illegaler Anhänger Wiegestation")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit, dass ein illegaler Auflieger auf der Waage auffällt.")]
         public string IllegalTrailerWeightStation { get; set; } = "1.0";
     }
 
     public class PolicePoliceProbabilitySettings
     {
-        [DisplayName("Unfall vor Streife [0]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Unfall vor Streife")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe, wenn ein Streifenwagen deinen Unfall direkt sieht.")]
         public string CarCrash { get; set; } = "1.0";
 
-        [DisplayName("Müdigkeitsverstoß vor Streife [1]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.3)[cite: 2]")]
+        [DisplayName("Müdigkeitsverstoß vor Streife")]
+        [Description("Standard: 0.3 (30%) | Wahrscheinlichkeit, dass eine vorbeifahrende Streife deine Lenkzeit kontrolliert.")]
         public string AvoidSleeping { get; set; } = "0.3";
 
-        [DisplayName("Falsche Richtung vor Streife [2]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.7)[cite: 2]")]
+        [DisplayName("Falsche Richtung vor Streife")]
+        [Description("Standard: 0.7 (70%) | Wahrscheinlichkeit einer Strafe bei Geisterfahrt vor einer Streife.")]
         public string WrongWay { get; set; } = "0.7";
 
-        [DisplayName("Blitzer vor Streife [3]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Blitzer vor Streife")]
+        [Description("Standard: 1.0 (100%) | Auslösewahrscheinlichkeit am Blitzer.")]
         public string SpeedingCamera { get; set; } = "1.0";
 
-        [DisplayName("Ohne Licht vor Streife [4]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.8)[cite: 2]")]
+        [DisplayName("Ohne Licht vor Streife")]
+        [Description("Standard: 0.8 (80%) | Wahrscheinlichkeit, dass eine Streife nachts dein fehlendes Licht ahndet.")]
         public string NoLightsNight { get; set; } = "0.8";
 
-        [DisplayName("Rote Ampel vor Streife [5]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Rote Ampel vor Streife")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe, wenn du vor einem Streifenwagen über Rot fährst.")]
         public string RedLights { get; set; } = "1.0";
 
-        [DisplayName("Geschwindigkeit vor Streife [6]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.9)[cite: 2]")]
+        [DisplayName("Geschwindigkeit vor Streife")]
+        [Description("Standard: 0.9 (90%) | Wahrscheinlichkeit, dass dich ein Streifenwagen im Verkehr bei überhöhtem Tempo blitzt.")]
         public string Speeding { get; set; } = "0.9";
 
-        [DisplayName("Wiegestation vor Streife [7]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Wiegestation vor Streife")]
+        [Description("Standard: 1.0 (100%) | Ahndungswahrscheinlichkeit an der Waage.")]
         public string AvoidWeighing { get; set; } = "1.0";
 
-        [DisplayName("Illegaler Anhänger vor Streife [8]")]
-        [Description("Wahrscheinlichkeit (Standard: 0.3)[cite: 2]")]
+        [DisplayName("Illegaler Anhänger vor Streife")]
+        [Description("Standard: 0.3 (30%) | Wahrscheinlichkeit, dass einer Polizeistreife dein unzulässiger Auflieger auffällt.")]
         public string IllegalTrailer { get; set; } = "0.3";
 
-        [DisplayName("Inspektion vor Streife [9]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Inspektion vor Streife")]
+        [Description("Standard: 1.0 (100%) | Ahndungswahrscheinlichkeit bei umgangener Inspektion.")]
         public string AvoidInspection { get; set; } = "1.0";
 
-        [DisplayName("Grenzübertritt vor Streife [10]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Grenzübertritt vor Streife")]
+        [Description("Standard: 1.0 (100%) | Ahndungswahrscheinlichkeit an der Grenze.")]
         public string IllegalBorderCrossing { get; set; } = "1.0";
 
-        [DisplayName("Standstreifen vor Streife [11]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Standstreifen vor Streife")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit einer Strafe, wenn du vor der Polizei den Standstreifen nutzt.")]
         public string HardShoulderViolation { get; set; } = "1.0";
 
-        [DisplayName("Beschädigtes Fahrzeug vor Streife [12]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Beschädigtes Fahrzeug vor Streife")]
+        [Description("Standard: 1.0 (100%) | Wahrscheinlichkeit, dass eine Streife deinen schwer beschädigten LKW beanstandet.")]
         public string DamagedVehicleUsage { get; set; } = "1.0";
 
-        [DisplayName("Illegaler Anhänger Wiegestation vor Streife [13]")]
-        [Description("Wahrscheinlichkeit (Standard: 1.0)[cite: 2]")]
+        [DisplayName("Illegaler Anhänger Wiegestation vor Streife")]
+        [Description("Standard: 1.0 (100%) | Ahndungswahrscheinlichkeit auf der Waage.")]
         public string IllegalTrailerWeightStation { get; set; } = "1.0";
     }
 }

@@ -1,15 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
 
-    <!-- Ausgabename der EXE-Datei -->
+    <!-- Ausgabename der EXE-Datei & RootNamespace für EmbeddedResources -->
     <AssemblyName>ETS2EE</AssemblyName>
+    <RootNamespace>ETS2_ModTool</RootNamespace>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Product>ETS2 Economy Equalizer</Product>
+    <Company>refskegg</Company>
+    <Authors>refskegg</Authors>
 
     <!-- Single-File & Standalone Konfiguration -->
     <PublishSingleFile>true</PublishSingleFile>

@@ -1,22 +1,43 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace ETS2_ModTool
 {
     public class ModManager
     {
-        public ModSettings ImportMod(string filePath, string tempFolder)
+        public ModSettings ImportMod(string filePath, string tempFolder, out ModMetadata? importedMeta)
         {
             ModSettings settings = new ModSettings();
+            importedMeta = null;
             
             if (Directory.Exists(tempFolder)) Directory.Delete(tempFolder, true);
             Directory.CreateDirectory(tempFolder);
             ZipFile.ExtractToDirectory(filePath, tempFolder);
+
+            // Manifest auslesen (Mod-Name & Autor wiederherstellen)
+            string manifestPath = Path.Combine(tempFolder, "manifest.sii");
+            if (File.Exists(manifestPath))
+            {
+                string manifestText = File.ReadAllText(manifestPath);
+                importedMeta = new ModMetadata();
+
+                Match nameMatch = Regex.Match(manifestText, @"display_name:\s*""(?<val>[^""]+)""");
+                if (nameMatch.Success) importedMeta.PackageName = nameMatch.Groups["val"].Value;
+
+                Match authorMatch = Regex.Match(manifestText, @"author:\s*""(?<val>[^""]+)""");
+                if (authorMatch.Success)
+                {
+                    string rawAuthor = authorMatch.Groups["val"].Value;
+                    importedMeta.Author = rawAuthor.Replace(" (Tool by refskegg)", "").Trim();
+                }
+            }
 
             // 1. Bank
             string bankPath = Path.Combine(tempFolder, "def", "bank_data.sii");
@@ -47,8 +68,10 @@ namespace ETS2_ModTool
             if (File.Exists(sePath)) settings.SpecialEvents.Import(File.ReadAllText(sePath));
 
             // 8. Gebrauchtfahrzeuge
-            string usedPath = Path.Combine(tempFolder, "def", "used_vehicle_assortment_config.sii");
+            string usedPath = Path.Combine(tempFolder, "def", "used_vehicle_config.sii");
+            string usedAltPath = Path.Combine(tempFolder, "def", "used_vehicle_assortment_config.sii");
             if (File.Exists(usedPath)) settings.UsedVehicles.Import(File.ReadAllText(usedPath));
+            else if (File.Exists(usedAltPath)) settings.UsedVehicles.Import(File.ReadAllText(usedAltPath));
 
             Directory.Delete(tempFolder, true);
             return settings;
@@ -75,12 +98,14 @@ namespace ETS2_ModTool
             ExportEmbeddedFile(defDir, "service_data.sii", settings.Service.Export);
             ExportEmbeddedFile(defDir, "skill_data.sii", settings.Skills.Export);
             ExportEmbeddedFile(defDir, "special_event_data.sii", settings.SpecialEvents.Export);
-            ExportEmbeddedFile(defDir, "used_vehicle_assortment_config.sii", settings.UsedVehicles.Export);
+            ExportEmbeddedFile(defDir, "used_vehicle_config.sii", settings.UsedVehicles.Export);
 
             // Als unkomprimiertes .scs verpacken
             ZipFile.CreateFromDirectory(workDir, targetScs, CompressionLevel.NoCompression, false);
             Directory.Delete(workDir, true);
         }
+
+        private static readonly Encoding Utf8NoBom = new UTF8Encoding(false);
 
         private void ExportEmbeddedFile(string defDir, string fileName, ActionRef<string> exportAction)
         {
@@ -92,15 +117,37 @@ namespace ETS2_ModTool
                 // Komma-Korrektur
                 content = Regex.Replace(content, @"(?<=\d),(?=\d)", ".");
 
-                File.WriteAllText(Path.Combine(defDir, fileName), content, Encoding.UTF8);
+                File.WriteAllText(Path.Combine(defDir, fileName), content, Utf8NoBom);
             }
         }
 
         private void CreateManifest(string rootDir, ModMetadata meta)
         {
-            // --- Universell lesbare Beschreibung ---
-            string formattedDescription =
-        $@"=========================================
+            // --- Universell lesbare Beschreibung (DE / EN je nach aktiver Sprache) ---
+            string formattedDescription = LocalizationManager.CurrentLanguage == AppLanguage.EN
+                ? $@"=========================================
+        {meta.PackageName}
+        Configured by: {meta.Author}
+        Tool: ETS2 Economy Equalizer by refskegg
+        =========================================
+
+        [ OVERVIEW ]
+        This mod package customizes the internal game economy for a
+        balanced and personalized driving experience.
+        Generated with ETS2 Economy Equalizer by refskegg.
+
+        [ CUSTOMIZED AREAS ]
+        • Loans & Bank Interest: Adjusted limits, durations and rates
+        • Freight Revenue: Scaled payouts and distance bonuses
+        • Operating Costs: Fuel discounts, service & towing rates
+        • Police & Fines: Modified penalties, delays and probabilities
+        • Driver Skills: Custom XP rates, payouts and unlocks
+
+        -----------------------------------------
+        Powered by ETS2 Economy Equalizer
+        Developed by refskegg
+        ========================================="
+                : $@"=========================================
         {meta.PackageName}
         Konfiguriert von: {meta.Author}
         Tool: ETS2 Economy Equalizer by refskegg
@@ -123,26 +170,25 @@ namespace ETS2_ModTool
         Developed by refskegg
         =========================================";
 
-            File.WriteAllText(Path.Combine(rootDir, "mod_description.txt"), formattedDescription, Encoding.UTF8);
+            File.WriteAllText(Path.Combine(rootDir, "mod_description.txt"), formattedDescription, Utf8NoBom);
 
             string manifestContent =
-        $@"SiiNunit
-        {{
-        mod_package : .package_name
-        {{
-            package_version: ""{meta.Version}""
-            author: ""{meta.Author} (Tool by refskegg)""
-            category[]: ""{meta.Category}""
-            icon: ""mod_icon.jpg""
-            description_file: ""mod_description.txt""
-            display_name: ""{meta.PackageName}""
-        }}
-        }}";
-            File.WriteAllText(Path.Combine(rootDir, "manifest.sii"), manifestContent, Encoding.UTF8);
+$@"SiiNunit
+{{
+mod_package : .package_name
+{{
+    package_version: ""{meta.Version}""
+    author: ""{meta.Author} (Tool by refskegg)""
+    category[]: ""{meta.Category}""
+    icon: ""mod_icon.jpg""
+    description_file: ""mod_description.txt""
+    display_name: ""{meta.PackageName}""
+}}
+}}";
+            File.WriteAllText(Path.Combine(rootDir, "manifest.sii"), manifestContent, Utf8NoBom);
 
             // mod_icon.jpg aus Ressourcen kopieren
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream? stream = assembly.GetManifestResourceStream("ETS2_ModTool.Templates.mod_icon.jpg"))
+            using (Stream? stream = OpenEmbeddedResourceStream("Templates.mod_icon.jpg"))
             {
                 if (stream != null)
                 {
@@ -161,30 +207,19 @@ namespace ETS2_ModTool
             if (string.IsNullOrWhiteSpace(json))
                 return new ModSettings();
 
-            return JsonSerializer.Deserialize<ModSettings>(json) ?? new ModSettings();
-        }
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            };
 
-        // --- JSON Externe Presets (Laden / Speichern auf Festplatte) ---
-        public void SavePreset(ModSettings settings, string filePath)
-        {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(settings, options);
-            File.WriteAllText(filePath, json, Encoding.UTF8);
-        }
-
-        public ModSettings LoadPreset(string filePath)
-        {
-            string json = File.ReadAllText(filePath, Encoding.UTF8);
-            return JsonSerializer.Deserialize<ModSettings>(json) ?? new ModSettings();
+            return JsonSerializer.Deserialize<ModSettings>(json, options) ?? new ModSettings();
         }
 
         // --- Hilfsfunktion: Textdatei aus interner Ressource auslesen ---
         private string ReadResourceText(string relativeResourcePath)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            string resourceName = $"ETS2_ModTool.{relativeResourcePath}";
-
-            using (Stream? stream = assembly.GetManifestResourceStream(resourceName))
+            using (Stream? stream = OpenEmbeddedResourceStream(relativeResourcePath))
             {
                 if (stream == null) return string.Empty;
                 using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
@@ -192,6 +227,23 @@ namespace ETS2_ModTool
                     return reader.ReadToEnd();
                 }
             }
+        }
+
+        private static Stream? OpenEmbeddedResourceStream(string relativeResourcePath)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+
+            Stream? stream = assembly.GetManifestResourceStream($"ETS2_ModTool.{relativeResourcePath}")
+                          ?? assembly.GetManifestResourceStream($"ETS2EE.{relativeResourcePath}");
+
+            if (stream != null)
+                return stream;
+
+            string? matchedName = assembly.GetManifestResourceNames()
+                .FirstOrDefault(n => n.EndsWith("." + relativeResourcePath, StringComparison.OrdinalIgnoreCase)
+                                  || n.Equals(relativeResourcePath, StringComparison.OrdinalIgnoreCase));
+
+            return matchedName != null ? assembly.GetManifestResourceStream(matchedName) : null;
         }
 
         public delegate void ActionRef<T>(ref T item);

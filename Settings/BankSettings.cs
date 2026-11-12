@@ -8,31 +8,31 @@ namespace ETS2_ModTool
     {
         [Category("Bank (bank_data.sii)")]
         [DisplayName("Bank Allgemein")]
-        [Description("Allgemeine Einstellungen für Dispo und Rückzahlungen.")]
+        [Description("Regeln für Kontoüberziehung (Dispo), Mahnungen und Sperrfristen nach Kreditrückzahlung.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public BankGeneralSettings General { get; set; } = new BankGeneralSettings();
 
         [Category("Bank (bank_data.sii)")]
         [DisplayName("Kredit 1 (Kleinkredit)")]
-        [Description("Erste Kreditstufe.")]
+        [Description("Kleinster Sofortkredit für Reparaturen oder erste Engpässe am Spielanfang.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public LoanSettings Loan1 { get; set; } = new LoanSettings("10000", 23.0, "5");
 
         [Category("Bank (bank_data.sii)")]
         [DisplayName("Kredit 2 (Mittelkredit)")]
-        [Description("Zweite Kreditstufe.")]
+        [Description("Mittlerer Kredit, ideal für den ersten eigenen Anhänger oder gebrauchten LKW.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public LoanSettings Loan2 { get; set; } = new LoanSettings("50000", 20.0, "5");
 
         [Category("Bank (bank_data.sii)")]
         [DisplayName("Kredit 3 (Großkredit)")]
-        [Description("Dritte Kreditstufe.")]
+        [Description("Großer Kredit für den Kauf eines neuen LKWs oder den Ausbau einer Garage.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public LoanSettings Loan3 { get; set; } = new LoanSettings("100000", 18.0, "5");
 
         [Category("Bank (bank_data.sii)")]
         [DisplayName("Kredit 4 (Riesenkredit)")]
-        [Description("Vierte Kreditstufe.")]
+        [Description("Maximalkredit für den Kauf neuer Garagen und mehrerer Fahrzeuge inklusive Fahrer.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public LoanSettings Loan4 { get; set; } = new LoanSettings("400000", 12.0, "10");
 
@@ -124,32 +124,36 @@ namespace ETS2_ModTool
 
     public class BankGeneralSettings
     {
-        [DisplayName("Min. nach Kreditrückzahlung")]
-        [Description("Wartezeit nach einer Kredit-Rückzahlung (Standard: 0).")]
+        [DisplayName("Sperrfrist nach Kreditrückzahlung")]
+        [Description("Standard: 0 | Wartezeit nach vollständiger Tilgung, bevor derselbe Kredit erneut aufgenommen werden kann.\n• Funktion: Verhindert direktes Umschulden, wenn ein Wert > 0 gesetzt wird.\n• Empfehlung: 0 belassen für freie Kreditaufnahme.")]
         public string MinAfterLoanRepay { get; set; } = "0";
 
         [DisplayName("Dauer Dispokredit (Tage)")]
-        [Description("Wie lange das Konto überzogen werden darf, bevor gepfändet wird (Standard: 5).")]
+        [Description("Standard: 5 Tage | Anzahl der Spieltage, die dein Konto im Minus (überzogen) sein darf.\n• Funktion: Ist das Konto nach Ablauf dieser Tage weiterhin negativ, pfändet die Bank automatisch LKWs oder Anhänger.\n• Tipp: Höhere Werte (z. B. 10) geben mehr Spielraum bei harten Wirtschafts-Mods.")]
         public string OverdraftDuration { get; set; } = "5";
 
         [DisplayName("Warnung Dispokredit (Tag)")]
-        [Description("An welchem Tag der Überziehung die Bank eine Warnung schickt (Standard: 2).")]
+        [Description("Standard: 2 Tage | Spieltag im Minus, an dem die Bank dir eine dringende Mahnungs-E-Mail schickt.\n• Hinweis: Sollte immer kleiner sein als die 'Dauer Dispokredit'.")]
         public string OverdraftWarnDay { get; set; } = "2";
     }
 
     public class LoanSettings
     {
-        [DisplayName("Höhe (€)")]
-        [Description("Der auszahlbare Kreditbetrag.")]
-        public string Amount { get; set; }
+        [DisplayName("Kredithöhe (€)")]
+        [Description("Standard: 10.000 bis 400.000 € | Der Betrag, der dir bei Aufnahme dieses Kredits sofort aufs Konto überwiesen wird.\n• Hinweis: Beachte auch das gesamte Kreditlimit unter '7. Events & Freischaltung', damit große Kredite nicht vom Limit blockiert werden.")]
+        public string Amount { get; set; } = "10000";
 
-        [DisplayName("Zinsen (%)")]
-        [Description("Zinssatz in Prozent (z. B. 23 für 23%).")]
-        public double InterestRate { get; set; }
+        [DisplayName("Zinssatz (%)")]
+        [Description("Standard: 12% bis 23% | Jährlicher Nominalzinssatz in Prozent (z. B. 15 für 15%).\n• Funktion: Bestimmt zusammen mit der Laufzeit die tägliche Tilgungsrate (jeden Tag um 12:00 Uhr abgebucht).\n• Realismus-Tipp: Echte Nutzfahrzeug-Finanzierungen liegen meist zwischen 5% und 9%.")]
+        public double InterestRate { get; set; } = 23.0;
 
         [DisplayName("Laufzeit (Wochen)")]
-        [Description("Die Dauer der Rückzahlung in Wochen.")]
-        public string Duration { get; set; }
+        [Description("Standard: 5 bzw. 10 Wochen | Rückzahlungsdauer in Spielwochen (1 Woche = 7 Spieltage).\n• Beispiel: '5' bedeutet 35 tägliche Raten. Eine längere Laufzeit senkt die tägliche Rate, erhöht aber die gesamten Zinskosten.")]
+        public string Duration { get; set; } = "5";
+
+        public LoanSettings()
+        {
+        }
 
         public LoanSettings(string amount, double interest, string duration)
         {
