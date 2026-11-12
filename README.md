@@ -50,6 +50,10 @@ A lightweight, powerful open-source tool for **Euro Truck Simulator 2** to custo
 
 ### 📥 Download & Getting Started
 
+> ⚠️ **Important: Back Up Your Profile / Savegame First!**  
+> Before testing custom economy values (especially extreme settings for loans, XP, or job generation), **always create a backup of your ETS2 profile** or test your mod on a separate profile first.  
+> You can find your profiles under `Documents\Euro Truck Simulator 2\profiles` (or `steam_profiles` if Steam Cloud is enabled). Use at your own risk!
+
 1. Download the matching `.exe` from the [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases) page:
    - **`ETS2EE_v1.0.0.exe`** for **ETS2 1.62+**
    - **Legacy Version** for **ETS2 1.60 / 1.61**
@@ -128,6 +132,10 @@ Ein schlankes, leistungsstarkes Open-Source-Tool für **Euro Truck Simulator 2**
 ---
 
 ### 📥 Download & Erste Schritte
+
+> ⚠️ **Wichtiger Hinweis: Vorher Profil / Savegame sichern!**  
+> Bevor du eigene Wirtschaftswerte ausprobierst (insbesondere bei extremen Werten für Kredite, XP oder Auftragsgenerierung), **erstelle bitte unbedingt ein Backup deines ETS2-Profils** oder teste die Mod zuerst mit einem separaten Testprofil.  
+> Deine Profile findest du unter `Dokumente\Euro Truck Simulator 2\profiles` (bzw. `steam_profiles` bei aktiver Steam Cloud). Die Nutzung erfolgt auf eigene Gefahr!
 
 1. Lade dir die passende `.exe` unter den [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases) herunter:
    - **`ETS2EE_v1.0.0.exe`** für **ETS2 1.62+**
