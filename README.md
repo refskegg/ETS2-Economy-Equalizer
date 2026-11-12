@@ -10,7 +10,7 @@ A lightweight, powerful open-source tool for **Euro Truck Simulator 2** to custo
 
 > ### 🎮 Compatibility & Game Versions
 > - **Main Version (`ETS2EE_v1.0.0.exe`):** Built for **ETS2 1.62 and newer** (includes full support for the new Bus / Coaches DLC skills).
-> - **Legacy Version:** For **ETS2 1.60 & 1.61**, a separate **Legacy Version** is available under [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases), as SCS Software expanded the structure of `skill_data.sii` starting with update 1.62.
+> - **Legacy Version:** For **ETS2 ≤ 1.61**, a separate **Legacy Version** is available under [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases), as SCS Software expanded the structure of `skill_data.sii` starting with update 1.62.
 
 ---
 
@@ -89,7 +89,7 @@ Ein schlankes, leistungsstarkes Open-Source-Tool für **Euro Truck Simulator 2**
 
 > ### 🎮 Kompatibilität & Spielversionen
 > - **Hauptversion (`ETS2EE_v1.0.0.exe`):** Für **ETS2 1.62 und neuer** (inklusive Unterstützung für die neuen Bus-/Coaches-DLC-Skills).
-> - **Legacy-Version:** Für **ETS2 1.60 & 1.61** steht unter den [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases) eine separate **Legacy-Version** bereit, da SCS Software ab Version 1.62 die Struktur der `skill_data.sii` erweitert hat.
+> - **Legacy-Version:** Für **ETS2 ≤ 1.61** steht unter den [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases) eine separate **Legacy-Version** bereit, da SCS Software ab Version 1.62 die Struktur der `skill_data.sii` erweitert hat.
 
 ---
 
