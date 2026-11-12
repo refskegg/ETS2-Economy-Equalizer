@@ -52,7 +52,7 @@ A lightweight, powerful open-source tool for **Euro Truck Simulator 2** to custo
 
 1. Download the matching `.exe` from the [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases) page:
    - **`ETS2EE_v1.0.0.exe`** for **ETS2 1.62+**
-   - **Legacy Version** for **ETS2 1.60 / 1.61**
+   - **Legacy Version** for **ETS2 ≤ 1.61**
 2. Double-click the file to launch it.
    > **Note on Windows SmartScreen:**  
    > Since this is a private, unsigned open-source tool without a paid code-signing certificate, Windows may show a one-time warning on first launch. Simply click **"More info"** $\rightarrow$ **"Run anyway"**.
@@ -131,7 +131,7 @@ Ein schlankes, leistungsstarkes Open-Source-Tool für **Euro Truck Simulator 2**
 
 1. Lade dir die passende `.exe` unter den [Releases](https://github.com/refskegg/ETS2-Economy-Equalizer/releases) herunter:
    - **`ETS2EE_v1.0.0.exe`** für **ETS2 1.62+**
-   - **Legacy-Version** für **ETS2 1.60 / 1.61**
+   - **Legacy-Version** für **ETS2 ≤ 1.61**
 2. Starte die Datei per Doppelklick.
    > **Hinweis zu Windows SmartScreen:**  
    > Da es sich um ein privates, nicht kostenpflichtig signiertes Open-Source-Tool handelt, warnt Windows beim ersten Start einmalig. Einfach auf **„Weitere Informationen“** $\rightarrow$ **„Trotzdem ausführen“** klicken.
