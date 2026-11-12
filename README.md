@@ -1,7 +1,7 @@
 # ETS2 Economy Equalizer (ETS2EE)
 
 🌍 **[🇬🇧 English](#-english-version)** | **[🇩🇪 Deutsch](#-deutsche-version)**
-
+ 
 ---
 
 ## 🇬🇧 English Version
