@@ -1,35 +1,43 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
 
-    <!-- Ausgabename der EXE-Datei -->
-    <AssemblyName>ETS2EE</AssemblyName>
+    <!-- Version & Output EXE Name (AssemblyName automatically includes $(Version)) -->
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyName>ETS2EE_v$(Version)</AssemblyName>
+    <RootNamespace>ETS2_ModTool</RootNamespace>
+    <Product>ETS2 Economy Equalizer</Product>
+    <Company>refskegg</Company>
+    <Authors>refskegg</Authors>
 
-    <!-- Single-File & Standalone Konfiguration -->
+    <!-- Single-File & Standalone Configuration -->
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 
-    <!-- Erzwingt das Einbetten aller DLLs und nativer Bibliotheken -->
+    <!-- Force embedding of all managed DLLs and native libraries -->
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 
-    <!-- Verhindert separate Sprachordner (de, fr, it...) im Publish-Ordner -->
+    <!-- Prevent separate satellite resource folders (de, fr, it...) in publish output -->
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
 
-    <!-- Keine externen .pdb-Symboldateien erzeugen -->
+    <!-- Do not generate external .pdb symbol files -->
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
-  <!-- Templates und Presets als EmbeddedResource einbinden -->
+  <!-- Embed Templates and Presets as internal resources -->
   <ItemGroup>
     <EmbeddedResource Include="Templates\**\*" />
     <EmbeddedResource Include="Presets\**\*" />

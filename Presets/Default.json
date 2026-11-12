@@ -1,4 +1,4 @@
-﻿{
+{
   "Bank": {
     "General": {
       "MinAfterLoanRepay": "0",
@@ -360,6 +360,30 @@
         "Rank5": "0.21",
         "Rank6": "0.21"
       }
+    },
+    "BusLongDuty": {
+      "Xp": { "Rank1": "0.05", "Rank2": "0.10", "Rank3": "0.15" },
+      "Revenue": { "Rank1": "0.05", "Rank2": "0.10", "Rank3": "0.15" },
+      "MaxStops": { "Rank1": "4", "Rank2": "6", "Rank3": "8" }
+    },
+    "BusTightSchedule": {
+      "Xp": { "Rank1": "0.1", "Rank2": "0.2", "Rank3": "0.4" },
+      "LessTime": { "Rank1": "0.05", "Rank2": "0.1", "Rank3": "0.15" }
+    },
+    "BusSatisfactionDecrease": {
+      "Revenue": { "Rank1": "0.1", "Rank2": "0.2", "Rank3": "0.3" },
+      "NegativeSatisfactionReduction": { "Rank1": "0.2", "Rank2": "0.4", "Rank3": "0.6" }
+    },
+    "BusLowAcceleration": {
+      "Xp": { "Rank1": "0.05", "Rank2": "0.10", "Rank3": "0.15" },
+      "Revenue": { "Rank1": "0.05", "Rank2": "0.10", "Rank3": "0.15" },
+      "SensitivityDecrease": { "Rank1": "0.1", "Rank2": "0.2", "Rank3": "0.3" }
+    },
+    "BusSatisfactionIncrease": {
+      "PositiveSatisfactionIncrease": { "Rank1": "0.1", "Rank2": "0.2", "Rank3": "0.3" }
+    },
+    "BusEcoDriving": {
+      "Saved": { "Rank1": "0.10", "Rank2": "0.20", "Rank3": "0.30" }
     }
   },
   "SpecialEvents": {

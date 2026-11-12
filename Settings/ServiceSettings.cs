@@ -6,12 +6,14 @@ namespace ETS2_ModTool
     public class ServiceSettings
     {
         [Category("Werkstatt (service_data.sii)")]
-        [DisplayName("1. LKW Restaurierung")]
+        [DisplayName("1. LKW Gesamtwiederherstellung")]
+        [Description("Aufpreise für die komplette Generalüberholung eines abgenutzten LKWs (entfernt unreparierbaren Verschleiß).")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public ServiceTruckSettings Truck { get; set; } = new ServiceTruckSettings();
 
         [Category("Werkstatt (service_data.sii)")]
-        [DisplayName("2. Anhänger Restaurierung")]
+        [DisplayName("2. Anhänger Gesamtwiederherstellung")]
+        [Description("Aufpreise für die komplette Generalüberholung eines eigenen Anhängers in der Werkstatt.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public ServiceTrailerSettings Trailer { get; set; } = new ServiceTrailerSettings();
 
@@ -52,31 +54,31 @@ namespace ETS2_ModTool
 
     public class ServiceTruckSettings
     {
-        [DisplayName("LKW Grundpreis Restaurierung")]
-        [Description("Fester Basispreis für die Gesamtwiederherstellung des LKWs (Standard: 0)[cite: 3].")]
+        [DisplayName("LKW Grundpreis Restaurierung (€)")]
+        [Description("Standard: 0 € | Einmalige Grundpauschale in Euro für die 'Gesamtwiederherstellung' des LKWs in der Werkstatt.")]
         public string RestoreFixedPrice { get; set; } = "0";
 
-        [DisplayName("LKW Zubehör Grundpreis")]
-        [Description("Fester Aufpreis pro Zubehörteil bei Restaurierung (Standard: 1000)[cite: 3].")]
+        [DisplayName("LKW Pauschale pro Bauteil (€)")]
+        [Description("Standard: 1000 € | Fester Arbeitslohn-Aufschlag je betroffenem Hauptbauteil (Motor, Getriebe, Chassis, Kabine, Räder) bei einer Gesamtwiederherstellung.")]
         public string RestoreAccessoryFixedPrice { get; set; } = "1000";
 
-        [DisplayName("LKW Zubehör Preisfaktor")]
-        [Description("Multiplikator für Zubehör-Wiederherstellung (Standard: 1.1)[cite: 3].")]
+        [DisplayName("LKW Bauteil-Preisfaktor")]
+        [Description("Standard: 1.1 (110%) | Multiplikator auf den Neupreis der restaurierten Bauteile (1.1 = Restaurierung kostet 110% des Teilewertes, 0.5 = 50%).")]
         public string RestoreAccessoryPriceCoef { get; set; } = "1.1";
     }
 
     public class ServiceTrailerSettings
     {
-        [DisplayName("Anhänger Grundpreis Restaurierung")]
-        [Description("Fester Basispreis für die Gesamtwiederherstellung des Anhängers (Standard: 0)[cite: 3].")]
+        [DisplayName("Anhänger Grundpreis Restaurierung (€)")]
+        [Description("Standard: 0 € | Einmalige Grundpauschale in Euro für die 'Gesamtwiederherstellung' eines eigenen Anhängers.")]
         public string RestoreFixedPrice { get; set; } = "0";
 
-        [DisplayName("Anhänger Zubehör Grundpreis")]
-        [Description("Fester Aufpreis pro Zubehörteil bei Restaurierung (Standard: 1000)[cite: 3].")]
+        [DisplayName("Anhänger Pauschale pro Bauteil (€)")]
+        [Description("Standard: 1000 € | Fester Arbeitslohn-Aufschlag je betroffenem Anhänger-Bauteil bei einer Gesamtwiederherstellung.")]
         public string RestoreAccessoryFixedPrice { get; set; } = "1000";
 
-        [DisplayName("Anhänger Zubehör Preisfaktor")]
-        [Description("Multiplikator für Zubehör-Wiederherstellung (Standard: 1.1)[cite: 3].")]
+        [DisplayName("Anhänger Bauteil-Preisfaktor")]
+        [Description("Standard: 1.1 (110%) | Multiplikator auf den Teilewert bei der Anhänger-Restaurierung.")]
         public string RestoreAccessoryPriceCoef { get; set; } = "1.1";
     }
 }
