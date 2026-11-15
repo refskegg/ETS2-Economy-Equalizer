@@ -1,5 +1,8 @@
 # ETS2 Economy Equalizer (ETS2EE)
 
+> 🇺🇸 **Looking for American Truck Simulator? / Du suchst die American Truck Simulator Version?**  
+> Check out **[ATS Economy Equalizer (ATSEE)](https://github.com/refskegg/ATS-Economy-Equalizer)**!
+
 🌍 **[🇬🇧 English](#-english-version)** | **[🇩🇪 Deutsch](#-deutsche-version)**
  
 ---
