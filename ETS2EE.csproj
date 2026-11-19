@@ -12,9 +12,9 @@
     <!-- Output name of the EXE file & RootNamespace for EmbeddedResources -->
     <AssemblyName>ETS2EE</AssemblyName>
     <RootNamespace>ETS2_ModTool</RootNamespace>
-    <Version>1.0.0-legacy</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.1-legacy</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
     <Product>ETS2 Economy Equalizer</Product>
     <Company>refskegg</Company>
     <Authors>refskegg</Authors>

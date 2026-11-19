@@ -89,25 +89,25 @@ namespace ETS2_ModTool
 
         private string ExtractValue(string content, string parameterName, string fallback)
         {
-            Match match = new Regex($@"{parameterName}:\s*(?<value>[0-9eE.-]+)").Match(content);
+            Match match = new Regex($@"(?<![a-zA-Z0-9_]){parameterName}:\s*(?<value>[0-9eE.-]+)").Match(content);
             return match.Success ? match.Groups["value"].Value : fallback;
         }
 
         private void UpdateParameter(ref string content, string parameterName, string newValue)
         {
-            Regex regex = new Regex($@"({parameterName}:\s*)[0-9eE.-]+");
+            Regex regex = new Regex($@"((?<![a-zA-Z0-9_]){parameterName}:\s*)[0-9eE.-]+");
             content = regex.Replace(content, $"${{1}}{newValue}");
         }
 
         private string ExtractBlockValue(string content, string blockId, string parameterName, string fallback)
         {
-            Match match = new Regex($@"{blockId}[^}}]*?{parameterName}:\s*(?<value>[0-9eE.-]+)").Match(content);
+            Match match = new Regex($@"{blockId}\s*\{{[^}}]*?(?<![a-zA-Z0-9_]){parameterName}:\s*(?<value>[0-9eE.-]+)").Match(content);
             return match.Success ? match.Groups["value"].Value : fallback;
         }
 
         private void UpdateBlockParameter(ref string content, string blockId, string parameterName, string newValue)
         {
-            Regex regex = new Regex($@"({blockId}[^}}]*?{parameterName}:\s*)[0-9eE.-]+");
+            Regex regex = new Regex($@"({blockId}\s*\{{[^}}]*?(?<![a-zA-Z0-9_]){parameterName}:\s*)[0-9eE.-]+");
             content = regex.Replace(content, $"${{1}}{newValue}", 1);
         }
 

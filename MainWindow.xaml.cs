@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -14,6 +15,7 @@ namespace ETS2_ModTool
 {
     public partial class MainWindow : Window
     {
+        private const string GitHubReleasesUrl = "https://github.com/refskegg/ETS2-Economy-Equalizer/releases";
         private ModSettings currentSettings;
         private readonly ModManager modManager;
         private string activeCategoryKey = "ALL";
@@ -110,6 +112,11 @@ namespace ETS2_ModTool
             btnExport.ToolTip = LocalizationManager.T(
                 "Mod-Paket an einem beliebigen Ort speichern",
                 "Save the .scs mod package to any location");
+
+            btnCheckUpdates.Content = LocalizationManager.T("↗ GitHub / Updates", "↗ GitHub / Updates");
+            btnCheckUpdates.ToolTip = LocalizationManager.T(
+                "Öffnet die GitHub-Releases-Seite im Browser, um nach neuen Versionen zu suchen",
+                "Opens the GitHub Releases page in your browser to check for updates");
 
             SetStatus(LocalizationManager.T("Bereit.", "Ready."));
         }
@@ -974,6 +981,28 @@ namespace ETS2_ModTool
             }
 
             return string.IsNullOrWhiteSpace(rawName) ? "MyCustomMod" : rawName;
+        }
+
+        private void btnCheckUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = GitHubReleasesUrl,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    LocalizationManager.T(
+                        $"Der Browser konnte nicht geöffnet werden.\nBitte besuche manuell:\n{GitHubReleasesUrl}\n\nDetails: {ex.Message}",
+                        $"Could not open the default browser.\nPlease visit manually:\n{GitHubReleasesUrl}\n\nDetails: {ex.Message}"),
+                    LocalizationManager.T("Hinweis", "Notice"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
         }
 
         private void SetStatus(string text)
