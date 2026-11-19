@@ -39,7 +39,7 @@ namespace ETS2_ModTool
             string rawVersion = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
                 ?? Assembly.GetExecutingAssembly().GetName().Version?.ToString(3)
-                ?? "1.0.0";
+                ?? "1.0.1";
 
             int plusIdx = rawVersion.IndexOf('+');
             if (plusIdx > 0)
