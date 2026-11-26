@@ -691,15 +691,31 @@ namespace ETS2_ModTool
                 string normalized = textValue.Trim().Replace(',', '.');
                 if (prop.PropertyType == typeof(string))
                 {
-                    prop.SetValue(targetObj, normalized);
-                    inputBox.Tag = null;
+                    if (!string.IsNullOrWhiteSpace(normalized) &&
+                        System.Text.RegularExpressions.Regex.IsMatch(normalized, @"^-?\d+(\.\d+)?([eE][+-]?\d+)?$"))
+                    {
+                        string? oldVal = prop.GetValue(targetObj) as string;
+                        prop.SetValue(targetObj, normalized);
+                        inputBox.Tag = null;
+                        inputBox.Foreground = new SolidColorBrush(Color.FromRgb(243, 244, 246));
+                        if (!string.Equals(oldVal, normalized, StringComparison.Ordinal))
+                            ClearPresetSelection();
+                    }
+                    else
+                    {
+                        inputBox.Foreground = new SolidColorBrush(Color.FromRgb(248, 113, 113));
+                    }
                 }
                 else if (prop.PropertyType == typeof(double))
                 {
-                    if (double.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out double dVal))
+                    if (double.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out double dVal) &&
+                        !double.IsNaN(dVal) && !double.IsInfinity(dVal))
                     {
+                        double? oldVal = prop.GetValue(targetObj) as double?;
                         prop.SetValue(targetObj, dVal);
                         inputBox.Foreground = new SolidColorBrush(Color.FromRgb(243, 244, 246));
+                        if (oldVal != dVal)
+                            ClearPresetSelection();
                     }
                     else
                     {
@@ -710,8 +726,11 @@ namespace ETS2_ModTool
                 {
                     if (int.TryParse(normalized, NumberStyles.Integer, CultureInfo.InvariantCulture, out int iVal))
                     {
+                        int? oldVal = prop.GetValue(targetObj) as int?;
                         prop.SetValue(targetObj, iVal);
                         inputBox.Foreground = new SolidColorBrush(Color.FromRgb(243, 244, 246));
+                        if (oldVal != iVal)
+                            ClearPresetSelection();
                     }
                     else
                     {
@@ -789,23 +808,23 @@ namespace ETS2_ModTool
             txtPresetDescription.Text = cmbPresets.SelectedIndex switch
             {
                 0 => LocalizationManager.T(
-                    "Unveränderte Originalwerte von SCS Software (15 €/km Basis, 1,0 XP/km).",
-                    "Unmodified original SCS Software values (15 €/km base, 1.0 XP/km)."),
+                    "Unveränderte Originalwerte von SCS Software (Faktor 0,9 / 1,0 | 1,0 XP/km).",
+                    "Unmodified original SCS Software values (Factor 0.9 / 1.0 | 1.0 XP/km)."),
                 1 => LocalizationManager.T(
-                    "Ausgewogene Wirtschaft (9 €/km, 10h EU-Lenkzeit, faire Kredite, halbierter KI-Fahrer-Gewinn).",
-                    "Balanced economy (9 €/km, 10h EU driving time, fair loans, reduced passive AI driver profit)."),
+                    "Ausgewogene Wirtschaft (~55–60 % Frachtvergütung, 10h EU-Lenkzeit, faire Kredite, gebremster KI-Gewinn).",
+                    "Balanced economy (~55–60% freight payout, 10h EU driving time, fair loans, reduced AI driver profit)."),
                 2 => LocalizationManager.T(
-                    "Echte Speditions-Simulation (2,20 €/km, 0,5 XP/km, 9h Lenk- / 11h Ruhezeit, knappe Margen).",
-                    "True haulage simulation (2.20 €/km, 0.5 XP/km, 9h drive / 11h rest, tight real-world margins)."),
+                    "Echte Speditions-Simulation (~20 % Frachtvergütung, 0,5 XP/km, 9h Lenk- / 11h Ruhezeit, realistische KI-Margen).",
+                    "True haulage simulation (~20% freight payout, 0.5 XP/km, 9h drive / 11h rest, realistic AI margins)."),
                 3 => LocalizationManager.T(
-                    "Fokus auf Gebraucht-LKWs: Großes & günstiges Angebot ab Level 0, günstigere Restauration.",
-                    "Focus on used trucks: Large & cheap assortment from Level 0, cheaper workshop restoration."),
+                    "Fokus auf Gebraucht-LKWs (~50 % Frachtvergütung, großes & günstiges Angebot ab Level 0, günstigere Restauration).",
+                    "Focus on used trucks (~50% freight payout, large & cheap assortment from Level 0, cheaper restoration)."),
                 4 => LocalizationManager.T(
-                    "Stressfreies Fahren: 0 % Fahrzeug-/Frachtschaden, keine Bußgelder, 48h Lenkzeit & 18 €/km.",
-                    "Stress-free cruising: 0% vehicle/cargo damage, no police fines, 48h driving limit & 18 €/km."),
+                    "Stressfreies Fahren: 0 % Fahrzeug-/Frachtschaden, keine Bußgelder, 48h Lenkzeit & ~125 % Frachtvergütung.",
+                    "Stress-free cruising: 0% vehicle/cargo damage, no police fines, 48h driving limit & ~125% freight payout."),
                 5 => LocalizationManager.T(
-                    "Schneller Aufstieg: 35 €/km, 2,5 XP/km, 0 % permanenter Verschleiß, günstige Kredite & Sofort-Unlocks.",
-                    "Fast progression: 35 €/km, 2.5 XP/km, 0% unfixable wear, cheap loans & instant unlocks."),
+                    "Schneller Aufstieg: >220 % Frachtvergütung, 2,5 XP/km, 0 % permanenter Verschleiß, günstige Kredite & Sofort-Unlocks.",
+                    "Fast progression: >220% freight payout, 2.5 XP/km, 0% unfixable wear, cheap loans & instant unlocks."),
                 _ => LocalizationManager.T(
                     "Benutzerdefinierte Werte aus importierter Mod-Datei aktiv.",
                     "Custom values from imported mod file active.")
@@ -943,7 +962,7 @@ namespace ETS2_ModTool
                     PackageName = finalModName,
                     Author = finalAuthor,
                     Version = "1.0",
-                    Category = "economy",
+                    Category = "other",
                     Description = LocalizationManager.T(
                         $"Erstellt mit dem ETS2 Economy Equalizer ({finalModName}).",
                         $"Created with ETS2 Economy Equalizer ({finalModName}).")
