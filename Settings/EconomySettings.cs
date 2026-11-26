@@ -60,7 +60,6 @@ namespace ETS2_ModTool
             Garage.TruckCountForOnline = ExtractValue(content, "truck_count_for_online", Garage.TruckCountForOnline);
 
             // 2. Cargo & Revenue
-            Revenue.RevenuePerKmBase = ExtractValue(content, "revenue_per_km_base", Revenue.RevenuePerKmBase);
             Revenue.FixedRevenue = ExtractValue(content, "fixed_revenue", Revenue.FixedRevenue);
             Revenue.RevenueCoefPerKm = ExtractValue(content, "revenue_coef_per_km", Revenue.RevenueCoefPerKm);
             Revenue.CargoMarketRevenueCoefPerKm = ExtractValue(content, "cargo_market_revenue_coef_per_km", Revenue.CargoMarketRevenueCoefPerKm);
@@ -105,6 +104,9 @@ namespace ETS2_ModTool
             Service.RechargeTimeBase = ExtractValue(content, "recharge_time_base", Service.RechargeTimeBase);
 
             // 6. AI Drivers
+            Driver.RevenuePerKmBase = ExtractValue(content, "revenue_per_km_base", Driver.RevenuePerKmBase);
+            (Driver.FuelCostPerKmMin, Driver.FuelCostPerKmMax) = ExtractTupleValues(content, "fuel_cost_per_km", Driver.FuelCostPerKmMin, Driver.FuelCostPerKmMax);
+            (Driver.DriverMaintenanceCostMin, Driver.DriverMaintenanceCostMax) = ExtractTupleValues(content, "driver_maintenance_cost", Driver.DriverMaintenanceCostMin, Driver.DriverMaintenanceCostMax);
             Driver.MinimalDriverSalary = ExtractValue(content, "minimal_driver_salary", Driver.MinimalDriverSalary);
             Driver.DriverRevenueCoefPerKm = ExtractValue(content, "driver_revenue_coef_per_km", Driver.DriverRevenueCoefPerKm);
             Driver.DriverCargoMarketRevenueCoefPerKm = ExtractValue(content, "driver_cargo_market_revenue_coef_per_km", Driver.DriverCargoMarketRevenueCoefPerKm);
@@ -146,7 +148,6 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "truck_count_for_online", Garage.TruckCountForOnline);
 
             // 2. Cargo & Revenue
-            UpdateParameter(ref content, "revenue_per_km_base", Revenue.RevenuePerKmBase);
             UpdateParameter(ref content, "fixed_revenue", Revenue.FixedRevenue);
             UpdateParameter(ref content, "revenue_coef_per_km", Revenue.RevenueCoefPerKm);
             UpdateParameter(ref content, "cargo_market_revenue_coef_per_km", Revenue.CargoMarketRevenueCoefPerKm);
@@ -191,6 +192,9 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "recharge_time_base", Service.RechargeTimeBase);
 
             // 6. AI Drivers
+            UpdateParameter(ref content, "revenue_per_km_base", Driver.RevenuePerKmBase);
+            UpdateTupleParameter(ref content, "fuel_cost_per_km", Driver.FuelCostPerKmMin, Driver.FuelCostPerKmMax);
+            UpdateTupleParameter(ref content, "driver_maintenance_cost", Driver.DriverMaintenanceCostMin, Driver.DriverMaintenanceCostMax);
             UpdateParameter(ref content, "minimal_driver_salary", Driver.MinimalDriverSalary);
             UpdateParameter(ref content, "driver_revenue_coef_per_km", Driver.DriverRevenueCoefPerKm);
             UpdateParameter(ref content, "driver_cargo_market_revenue_coef_per_km", Driver.DriverCargoMarketRevenueCoefPerKm);
@@ -219,28 +223,57 @@ namespace ETS2_ModTool
             UpdateParameter(ref content, "exp_damaged_cargo_factor", XP.ExpDamagedCargoFactor);
         }
 
+        private static readonly Regex ValidSiiNumberRegex = new Regex(@"^-?\d+(\.\d+)?([eE][+-]?\d+)?$", RegexOptions.Compiled);
+
+        private static string? NormalizeNumericValue(string? val)
+        {
+            if (string.IsNullOrWhiteSpace(val)) return null;
+            string normalized = val.Trim().Replace(',', '.');
+            return ValidSiiNumberRegex.IsMatch(normalized) ? normalized : null;
+        }
+
         private string ExtractValue(string content, string paramName, string fallback)
         {
-            Match m = new Regex($@"(?<!\[\d+\])\b{paramName}:\s*(?<value>[0-9eE.-]+)").Match(content);
+            Match m = new Regex($@"(?<!\[\d+\])\b{paramName}:\s*(?<value>[0-9eE.+-]+)").Match(content);
             return m.Success ? m.Groups["value"].Value : fallback;
         }
 
         private void UpdateParameter(ref string content, string paramName, string val)
         {
-            Regex r = new Regex($@"(\b{paramName}:\s*)[0-9eE.-]+");
-            content = r.Replace(content, $"${{1}}{val}");
+            string? safeVal = NormalizeNumericValue(val);
+            if (safeVal == null) return; // Schutz gegen leere/ungültige Werte -> Template-Default bleibt intakt
+            Regex r = new Regex($@"(\b{paramName}:\s*)[0-9eE.+-]+");
+            content = r.Replace(content, $"${{1}}{safeVal}");
         }
 
         private string ExtractArrayValue(string content, string arrayName, int index, string fallback)
         {
-            Match m = new Regex($@"{arrayName}\[{index}\]:\s*(?<value>[0-9eE.-]+)").Match(content);
+            Match m = new Regex($@"{arrayName}\[{index}\]:\s*(?<value>[0-9eE.+-]+)").Match(content);
             return m.Success ? m.Groups["value"].Value : fallback;
         }
 
         private void UpdateArrayParameter(ref string content, string arrayName, int index, string val)
         {
-            Regex r = new Regex($@"({arrayName}\[{index}\]:\s*)[0-9eE.-]+");
-            content = r.Replace(content, $"${{1}}{val}");
+            string? safeVal = NormalizeNumericValue(val);
+            if (safeVal == null) return;
+            Regex r = new Regex($@"({arrayName}\[{index}\]:\s*)[0-9eE.+-]+");
+            content = r.Replace(content, $"${{1}}{safeVal}");
+        }
+
+        private (string min, string max) ExtractTupleValues(string content, string paramName, string fallbackMin, string fallbackMax)
+        {
+            Match m = new Regex($@"\b{paramName}:\s*\(\s*(?<min>[0-9eE.+-]+)\s*,\s*(?<max>[0-9eE.+-]+)\s*\)").Match(content);
+            return m.Success ? (m.Groups["min"].Value, m.Groups["max"].Value) : (fallbackMin, fallbackMax);
+        }
+
+        private void UpdateTupleParameter(ref string content, string paramName, string minVal, string maxVal)
+        {
+            string? safeMin = NormalizeNumericValue(minVal);
+            string? safeMax = NormalizeNumericValue(maxVal);
+            if (safeMin == null || safeMax == null) return;
+            // WICHTIG: Leerzeichen nach dem Komma beibehalten, damit ModManager Regex (?<=\d),(?=\d) das Tupel nicht verändert!
+            Regex r = new Regex($@"(\b{paramName}:\s*)\(\s*[0-9eE.+-]+\s*,\s*[0-9eE.+-]+\s*\)");
+            content = r.Replace(content, $"${{1}}({safeMin}, {safeMax})");
         }
     }
 
@@ -281,21 +314,17 @@ namespace ETS2_ModTool
 
     public class EconomyRevenueSettings
     {
-        [DisplayName("Basisvergütung pro km (€)")]
-        [Description("Standard: 15 € | Der wichtigste Wert der gesamten Spielwirtschaft! Grundbetrag in Euro je gefahrenem Auftrags-Kilometer.\n• Berechnung: Wird noch mit dem jeweiligen Fracht-Faktor und deinen Skill-Boni multipliziert.\n• Richtwerte: 1.5 bis 4.0 € = echtes Speditions-Feeling (Hardcore) | 6.0 bis 10.0 € = ausgewogen | 15 € = Vanilla.")]
-        public string RevenuePerKmBase { get; set; } = "15";
-
-        [DisplayName("Fester Fracht-Grundbetrag (€)")]
-        [Description("Standard: 600 € | Einmalige Grundpauschale in Euro, die auf jeden Auftrag (unabhängig von der Strecke) oben draufgezahlt wird.\n• Tipp: Für realistische Wirtschaften auf 150 bis 300 € senken.")]
-        public string FixedRevenue { get; set; } = "600";
-
-        [DisplayName("Frachtmarkt Koeffizient")]
-        [Description("Standard: 0.9 (90%) | Multiplikator für Aufträge im normalen 'Frachtmarkt' (eigene Zugmaschine, gestellter fremder Auflieger).\n• Hinweis: Bei 'Schnellen Aufträgen' (gestellter LKW) zahlt das Spiel automatisch noch etwas weniger.")]
+        [DisplayName("Frachtmarkt-Vergütung (Multiplikator)")]
+        [Description("Standard: 0.9 (= 100 % Vanilla, ca. 15–20 €/km je nach Fracht) | HAUPTHEBEL für deine eigenen Einnahmen im Frachtmarkt & bei Externen Aufträgen!\n• Berechnung: Multipliziert direkt die Fracht-Vergütung pro km (aus den Fracht-Dateien).\n• Richtwerte: 0.15–0.25 = Hardcore (ca. 2,5–4 €/km) | 0.45–0.60 = Ausgewogen | 0.9 = Vanilla | 1.8 = Doppelte Bezahlung.")]
         public string RevenueCoefPerKm { get; set; } = "0.9";
 
-        [DisplayName("Frachtmarkt (Eigener Trailer) Koeffizient")]
-        [Description("Standard: 1.0 (100%) | Multiplikator für den 'Cargo-Markt' (wenn du sowohl eigenen LKW als auch eigenen Anhänger nutzt).")]
+        [DisplayName("Eigener-Trailer-Vergütung / Cargo-Markt (Multiplikator)")]
+        [Description("Standard: 1.0 (= 100 % Vanilla) | HAUPTHEBEL für deine Einnahmen im Cargo-Markt (eigener LKW + eigener Auflieger)!\n• Berechnung: Multipliziert direkt die Fracht-Vergütung pro km für Aufträge mit eigenem Trailer.\n• Richtwerte: 0.20–0.30 = Hardcore | 0.55–0.70 = Ausgewogen | 1.0 = Vanilla | 2.0 = Doppelte Bezahlung.")]
         public string CargoMarketRevenueCoefPerKm { get; set; } = "1.0";
+
+        [DisplayName("Fester Fracht-Grundbetrag (€)")]
+        [Description("Standard: 600 € | Einmalige Grundpauschale in Euro, die auf jeden Auftrag (unabhängig von der Strecke) addiert wird.\n• Hinweis: Wird auch bei KI-Fahrern berücksichtigt. Für Hardcore auf 100–250 € senken.")]
+        public string FixedRevenue { get; set; } = "600";
 
         [DisplayName("Bonus-Multiplikator pro Spielerlevel")]
         [Description("Standard: 0.015 (+1,5% je Level) | Zusätzlicher Einnahmen-Bonus für jedes erreichte Spielerlevel.\n• Beispiel: Auf Level 20 verdienst du bei 0.015 automatisch 30% mehr pro Auftrag.")]
@@ -441,17 +470,37 @@ namespace ETS2_ModTool
 
     public class EconomyDriverSettings
     {
+        [DisplayName("KI-Fahrer: Basisvergütung pro km (€)")]
+        [Description("Standard: 15 € | Grundbetrag pro km NUR für die KI-Fahrer-Simulation (hat KEINEN Einfluss auf deine eigenen Frachtmarkt-/Cargo-Markt-Aufträge!).\n• Zusammenwirkung: Wird mit dem jeweiligen KI-Fahrer-Einnahmenkoeffizienten (0.67 bzw. 0.70) multipliziert.\n• Tipp: Senke diesen Wert UND die beiden KI-Koeffizienten, wenn deine angestellten Fahrer zu schnell Millionen verdienen.")]
+        public string RevenuePerKmBase { get; set; } = "15";
+
         [DisplayName("KI-Fahrer: Mindestgehalt (€)")]
         [Description("Standard: 350 € | Grundgehalt für deine angestellten Fahrer pro Auftrag/Tag.")]
         public string MinimalDriverSalary { get; set; } = "350";
 
-        [DisplayName("KI-Fahrer: Einnahmenkoeffizient (Frachtmarkt)")]
-        [Description("Standard: 0.67 (67%) | Bestimmt, wie viel Umsatz deine KI-Fahrer im Vergleich zur Basisvergütung einfahren.\n• Tipp: Wenn KI-Fahrer zu schnell Millionen scheffeln, senke diesen Wert auf z. B. 0.35 oder 0.45.")]
+        [DisplayName("KI-Fahrer & Schnellaufträge: Einnahmen-Faktor")]
+        [Description("Standard: 0.67 (67 %) | Steuert die km-Vergütung für KI-Fahrer (ohne eigenen Trailer) UND für deine eigenen 'Schnellen Aufträge' (Quick Jobs)!\n• Wichtig: Wenn deine Garagen eigene Auflieger besitzen, senke UNBEDINGT auch den 'Eigener Trailer'-Faktor darunter sowie die KI-Basisvergütung oben.\n• Hinweis: Bereits laufende KI-Aufträge nutzen noch alte Werte, bis sie abgeschlossen sind.")]
         public string DriverRevenueCoefPerKm { get; set; } = "0.67";
 
-        [DisplayName("KI-Fahrer: Einnahmenkoeffizient (Eigener Trailer)")]
-        [Description("Standard: 0.70 (70%) | Umsatzfaktor für KI-Fahrer, wenn sie einen eigenen Anhänger deiner Firma nutzen.")]
+        [DisplayName("KI-Fahrer (Eigener Trailer): Einnahmen-Faktor")]
+        [Description("Standard: 0.70 (70 %) | Umsatzfaktor für KI-Fahrer, wenn sie einen firmen-eigenen Auflieger aus der Garage nutzen.\n• Wichtig: Muss zusammen mit dem normalen KI-Faktor und der KI-Basisvergütung gesenkt werden, damit KI-Fahrer mit eigenen Trailern nicht weiter Millionen verdienen.")]
         public string DriverCargoMarketRevenueCoefPerKm { get; set; } = "0.70";
+
+        [DisplayName("KI-Fahrer: Spritkosten Min (€/km)")]
+        [Description("Standard: 1.5 €/km | Untergrenze der simulierten Dieselkosten pro Kilometer für angestellte KI-Fahrer (fuel_cost_per_km).\n• Tipp: Höhere Sprit- und Wartungskosten drücken die Gewinnmarge deiner KI-Fahrer realistisch nach unten.")]
+        public string FuelCostPerKmMin { get; set; } = "1.5";
+
+        [DisplayName("KI-Fahrer: Spritkosten Max (€/km)")]
+        [Description("Standard: 2.0 €/km | Obergrenze der simulierten Dieselkosten pro Kilometer für angestellte KI-Fahrer (fuel_cost_per_km).")]
+        public string FuelCostPerKmMax { get; set; } = "2.0";
+
+        [DisplayName("KI-Fahrer: Wartung & Versicherung Min (€/km)")]
+        [Description("Standard: 1.8 €/km | Untergrenze für Wartungs- und Versicherungskosten pro Kilometer deiner KI-Fahrer (driver_maintenance_cost).\n• Tipp: Erhöhe diese Werte, um übermäßige KI-Gewinne realistisch abzuschmelzen.")]
+        public string DriverMaintenanceCostMin { get; set; } = "1.8";
+
+        [DisplayName("KI-Fahrer: Wartung & Versicherung Max (€/km)")]
+        [Description("Standard: 3.0 €/km | Obergrenze für Wartungs- und Versicherungskosten pro Kilometer deiner KI-Fahrer (driver_maintenance_cost).")]
+        public string DriverMaintenanceCostMax { get; set; } = "3.0";
 
         [DisplayName("KI-Fahrer: Vermittlungsgebühr (€)")]
         [Description("Standard: 1500 € | Einmalige Gebühr an die Arbeitsagentur beim Einstellen eines neuen Fahrers.")]

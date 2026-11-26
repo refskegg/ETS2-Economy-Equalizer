@@ -10,9 +10,9 @@
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
 
     <!-- Version & Output EXE Name (AssemblyName automatically includes $(Version)) -->
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
     <AssemblyName>ETS2EE_v$(Version)</AssemblyName>
     <RootNamespace>ETS2_ModTool</RootNamespace>
     <Product>ETS2 Economy Equalizer</Product>

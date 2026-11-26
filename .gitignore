@@ -4,3 +4,7 @@ obj/
 .vs/
 def/
 publish/
+
+# Interne Bugfix- & Analyse-Dokumentation
+BF*.md
+BVF*.md
